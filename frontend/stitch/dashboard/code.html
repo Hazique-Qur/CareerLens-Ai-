@@ -198,17 +198,20 @@
                 return;
             }
 
-            // Load User Avatar
+            // Load User Profile
             const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-            if (userProfile && userProfile.avatar) {
-                const profileImg = document.querySelector('a[href="../profile_page/code.html"] img');
-                if (profileImg) profileImg.src = userProfile.avatar;
-                else {
-                    // If no img tag exists yet (it's a span/div), replace it
-                    const profileContainer = document.querySelector('a[href="../profile_page/code.html"]');
-                    if (profileContainer) {
-                        profileContainer.innerHTML = `<img src="${userProfile.avatar}" class="size-full rounded-full border border-primary/30" alt="Profile">`;
+            if (userProfile) {
+                // Update Avatar
+                if (userProfile.avatar) {
+                    const profileLink = document.querySelector('a[href="../profile_page/code.html"]');
+                    if (profileLink) {
+                        profileLink.innerHTML = `<img src="${userProfile.avatar}" class="size-full rounded-full border border-primary/30 object-cover" alt="Profile">`;
                     }
+                }
+                // Update Welcome Message (Optional but nice)
+                const heroTitle = document.querySelector('h2.text-2xl.font-bold');
+                if (heroTitle && userProfile.name) {
+                    heroTitle.textContent = `Welcome back, ${userProfile.name.split(' ')[0]}!`;
                 }
             }
 

@@ -490,11 +490,12 @@
         });
 
         const responses = {
-            "default": "That's a great question! CareerLens AI uses advanced reasoning to analyze your resume and match it against market demands. Try uploading your resume to see the magic!",
-            "pricing": "Our Pro plan is just $19/mo and includes unlimited analyses, AI interview mentoring, and premium roadmap resources.",
-            "how": "It's simple: 1. Upload your resume. 2. Our AI analyzes your skills. 3. Get a personalized roadmap to your dream role.",
-            "hello": "Hi there! I'm here to help you navigate your career path. Ask me anything about our platform.",
-            "resume": "You can upload your resume in PDF format. We'll extract your skills and compare them to the requirements of your target role."
+            "default": "That's a great question! CareerLens AI uses advanced reasoning to analyze your resume and match it against market demands. We now support over 15+ specialized roles including Cloud Architects, AI Engineers, and Cybersecurity Analysts!",
+            "pricing": "Our Pro plan is just $19/mo and includes unlimited analyses, AI interview mentoring, premium roadmap resources, and priority support.",
+            "how": "It's simple: 1. Upload your resume. 2. Our AI extracts your technical DNA. 3. Get a 100-day actionable roadmap to your dream role.",
+            "hello": "Hi there! I'm your CareerLens Assistant. Looking to switch careers into Cloud, DevOps, or Data Science? I can help you find your path.",
+            "resume": "You can upload your resume in PDF format. We'll automatically identify your core strengths and bridge the gaps for your target role.",
+            "roles": "We support a wide range of roles: Frontend, Backend, Fullstack, Mobile, DevOps, Cloud Architect, Data Scientist, Data Analyst, Product Manager, UX Designer, QA, Security, and AI/ML Engineer!"
         };
 
         chatForm.addEventListener('submit', (e) => {
@@ -508,10 +509,11 @@
             setTimeout(() => {
                 let response = responses.default;
                 const lowMsg = msg.toLowerCase();
-                if (lowMsg.includes('price') || lowMsg.includes('cost')) response = responses.pricing;
-                else if (lowMsg.includes('how')) response = responses.how;
-                else if (lowMsg.includes('hello') || lowMsg.includes('hi')) response = responses.hello;
-                else if (lowMsg.includes('resume') || lowMsg.includes('cv')) response = responses.resume;
+                if (lowMsg.includes('price') || lowMsg.includes('cost') || lowMsg.includes('plan')) response = responses.pricing;
+                else if (lowMsg.includes('how') || lowMsg.includes('work')) response = responses.how;
+                else if (lowMsg.includes('hello') || lowMsg.includes('hi') || lowMsg.includes('hey')) response = responses.hello;
+                else if (lowMsg.includes('resume') || lowMsg.includes('cv') || lowMsg.includes('file')) response = responses.resume;
+                else if (lowMsg.includes('role') || lowMsg.includes('job') || lowMsg.includes('option')) response = responses.roles;
 
                 addMessage(response, 'ai');
             }, 600);
@@ -547,9 +549,22 @@
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (isLoggedIn) {
                 const loginBtn = document.getElementById('loginBtn');
+                const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
                 if (loginBtn) {
-                    loginBtn.textContent = 'Dashboard';
-                    loginBtn.href = '../dashboard/code.html';
+                    if (userProfile && userProfile.avatar) {
+                        loginBtn.outerHTML = `
+                            <a href="../dashboard/code.html" class="flex items-center gap-3 group">
+                                <span class="text-sm font-bold text-slate-300 group-hover:text-primary transition-colors hidden sm:inline">${userProfile.name.split(' ')[0]}</span>
+                                <div class="size-10 rounded-full border-2 border-primary/20 group-hover:border-primary transition-all overflow-hidden">
+                                    <img src="${userProfile.avatar}" class="size-full object-cover">
+                                </div>
+                            </a>
+                        `;
+                    } else {
+                        loginBtn.textContent = 'Dashboard';
+                        loginBtn.href = '../dashboard/code.html';
+                    }
                 }
 
                 const ctaLinks = document.querySelectorAll('a[href="../auth_page/code.html"]');

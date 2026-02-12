@@ -132,6 +132,15 @@
                                     <option value="ux-designer">UX Designer</option>
                                     <option value="product-manager">Product Manager</option>
                                     <option value="backend">Backend Engineer</option>
+                                    <option value="mobile">Mobile Developer</option>
+                                    <option value="devops">DevOps Engineer</option>
+                                    <option value="fullstack">Fullstack Developer</option>
+                                    <option value="security">Cybersecurity Analyst</option>
+                                    <option value="ai-ml">AI/ML Engineer</option>
+                                    <option value="data-analyst">Data Analyst</option>
+                                    <option value="cloud-architect">Cloud Architect</option>
+                                    <option value="qa-engineer">QA Engineer</option>
+                                    <option value="embedded">Embedded Systems Engineer</option>
                                 </select>
                                 <span
                                     class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
@@ -181,12 +190,12 @@
                         const resumeFileInput = document.getElementById('resumeFile');
                         const fileNameDisplay = document.getElementById('fileNameDisplay');
 
-                        // Load User Avatar
+                        // Load User Profile
                         const userProfile = JSON.parse(localStorage.getItem('userProfile'));
                         if (userProfile && userProfile.avatar) {
                             const profileContainer = document.querySelector('a[href="../profile_page/code.html"]');
                             if (profileContainer) {
-                                profileContainer.innerHTML = `<img src="${userProfile.avatar}" class="size-full rounded-full border border-primary/30" alt="Profile">`;
+                                profileContainer.innerHTML = `<img src="${userProfile.avatar}" class="size-full rounded-full border border-primary/30 object-cover" alt="Profile">`;
                             }
                         }
                         const submitBtn = document.getElementById('submitBtn');

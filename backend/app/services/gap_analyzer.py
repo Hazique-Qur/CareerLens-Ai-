@@ -14,10 +14,20 @@ def analyze_skill_gap(user_skills: list, required_skills: list):
 
     match_score = 0
     if required_skills:
-        match_score = (len(matched) / len(required_skills)) * 100
+        # Calculate raw match
+        raw_match = (len(matched) / len(required_skills)) * 100
+        
+        # provide a baseline score if we found any technical skills at all
+        # this avoids the demoralizing "0%" for valid resumes
+        if len(matched) > 0:
+            match_score = max(20, raw_match)
+        elif len(user_skills) > 0:
+            match_score = 15 # Baseline for "some effort"
+        else:
+            match_score = 5 # Minimum for uploading a file
 
     return {
-        "match_score": round(match_score, 2),
+        "match_score": min(95, round(match_score, 2)), # Cap slightly below 100 for modesty
         "matched_skills": matched,
         "missing_skills": missing
     }

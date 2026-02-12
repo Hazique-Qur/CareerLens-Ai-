@@ -54,7 +54,8 @@
         <div class="flex items-center gap-4">
             <button onclick="window.location.href='../dashboard/code.html'"
                 class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Results</button>
-            <div class="size-8 rounded-full bg-primary border border-primary/30 flex items-center justify-center">
+            <div class="size-8 rounded-full bg-primary border border-primary/30 flex items-center justify-center overflow-hidden"
+                id="headerAvatarContainer">
                 <span class="material-symbols-outlined text-background-dark text-sm font-bold">person</span>
             </div>
         </div>
@@ -62,16 +63,16 @@
 
     <main class="flex-1 max-w-2xl mx-auto w-full p-6 md:p-10">
         <div class="flex flex-col items-center text-center mb-10">
-            <div
-                class="size-24 rounded-full bg-primary/20 border-2 border-primary/30 flex items-center justify-center mb-4 relative">
+            <div class="size-24 rounded-full bg-primary/20 border-2 border-primary/30 flex items-center justify-center mb-4 relative overflow-hidden"
+                id="profileAvatarContainer">
                 <span class="material-symbols-outlined text-primary text-5xl">person</span>
-                <button
-                    class="absolute bottom-0 right-0 bg-primary size-8 rounded-full flex items-center justify-center border-4 border-background-dark">
+                <button onclick="openEditProfile()"
+                    class="absolute bottom-0 right-0 bg-primary size-8 rounded-full flex items-center justify-center border-4 border-background-dark hover:scale-110 transition-transform">
                     <span class="material-symbols-outlined text-background-dark text-sm">edit</span>
                 </button>
             </div>
-            <h1 class="text-3xl font-bold">Hazique Qureshi</h1>
-            <p class="text-slate-400">Career Explorer • Level 4</p>
+            <h1 class="text-3xl font-bold" id="userName">Hazique Qureshi</h1>
+            <p class="text-slate-400" id="userRole">Career Explorer • Level 4</p>
         </div>
 
         <div class="space-y-6">
@@ -84,9 +85,10 @@
                     <div class="flex justify-between items-center py-2 border-b border-slate-700/50">
                         <div>
                             <p class="text-xs font-bold text-slate-500 uppercase">Email Address</p>
-                            <p class="text-sm">hazique.qureshi@example.com</p>
+                            <p class="text-sm" id="userEmail">hazique.qureshi@example.com</p>
                         </div>
-                        <button class="text-primary text-xs font-bold">Change</button>
+                        <button onclick="openEditProfile()"
+                            class="text-primary text-xs font-bold hover:underline">Change</button>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b border-slate-700/50">
                         <div>
@@ -143,9 +145,115 @@
         </div>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                window.location.href = '../landing_page/code.html';
+                return;
+            }
+            loadProfile();
+        });
+
+        function loadProfile() {
+            const defaults = {
+                name: "Hazique Qureshi",
+                email: "hazique.qureshi@careerlens.ai",
+                avatar: ""
+            };
+
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || defaults;
+
+            document.getElementById('userName').textContent = profile.name;
+            document.getElementById('userEmail').textContent = profile.email;
+
+            if (profile.avatar) {
+                const imgHtml = `<img src="${profile.avatar}" class="size-full object-cover">`;
+                document.getElementById('profileAvatarContainer').innerHTML = imgHtml + `
+                    <button onclick="openEditProfile()" class="absolute bottom-0 right-0 bg-primary size-8 rounded-full flex items-center justify-center border-4 border-background-dark hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-background-dark text-sm">edit</span>
+                    </button>
+                `;
+                document.getElementById('headerAvatarContainer').innerHTML = imgHtml;
+            }
+
+            const analysis = JSON.parse(localStorage.getItem('careerAnalysis'));
+            if (analysis && analysis.target_role) {
+                const targetRoleEl = document.querySelector('.text-sm.font-bold');
+                if (targetRoleEl) targetRoleEl.textContent = analysis.target_role;
+            }
+        }
+
+        async function openEditProfile() {
+            const profile = JSON.parse(localStorage.getItem('userProfile')) || {
+                name: "Hazique Qureshi",
+                email: "hazique.qureshi@careerlens.ai",
+                avatar: ""
+            };
+
+            const avatarPresets = [
+                'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+                'https://api.dicebear.com/7.x/avataaars/svg?seed=Aria',
+                'https://api.dicebear.com/7.x/avataaars/svg?seed=Jack',
+                'https://api.dicebear.com/7.x/avataaars/svg?seed=Luna'
+            ];
+
+            const { value: formValues } = await Swal.fire({
+                title: 'Edit Profile',
+                background: '#161d26',
+                color: '#fff',
+                confirmButtonColor: '#3caff6',
+                html: `
+                    <div class="space-y-4 text-left p-2">
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 uppercase">Full Name</label>
+                            <input id="swal-input1" class="w-full bg-[#0b0e14] border border-slate-700 rounded-lg p-3 text-sm focus:border-primary outline-none" value="${profile.name}">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 uppercase">Email Address</label>
+                            <input id="swal-input2" class="w-full bg-[#0b0e14] border border-slate-700 rounded-lg p-3 text-sm focus:border-primary outline-none" value="${profile.email}">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 uppercase">Choose Avatar</label>
+                            <div class="flex gap-3 mt-2">
+                                ${avatarPresets.map(url => `
+                                    <div class="avatar-option size-12 rounded-full cursor-pointer border-2 ${profile.avatar === url ? 'border-primary' : 'border-transparent'} hover:border-primary/50 transition-all overflow-hidden" 
+                                         onclick="document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('border-primary', 'border-transparent')); el.classList.add('border-transparent'); this.classList.remove('border-transparent'); this.classList.add('border-primary'); window.selectedAvatar='${url}'">
+                                        <img src="${url}" class="size-full">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `,
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        name: document.getElementById('swal-input1').value,
+                        email: document.getElementById('swal-input2').value,
+                        avatar: window.selectedAvatar || profile.avatar
+                    }
+                }
+            });
+
+            if (formValues) {
+                localStorage.setItem('userProfile', JSON.stringify(formValues));
+                loadProfile();
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Profile updated!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    background: '#161d26',
+                    color: '#fff'
+                });
+            }
+        }
+
         function handleLogout() {
-            // Simulated logout
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('careerAnalysis');
             window.location.href = '../landing_page/code.html';

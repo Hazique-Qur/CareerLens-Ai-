@@ -21,13 +21,40 @@ ROLE_SKILLS_DB = {
         "Interaction Design"
     ],
     "Frontend Developer": [
-        "JavaScript",
-        "React",
-        "HTML",
-        "CSS",
-        "Next.js",
-        "Tailwind",
-        "REST APIs"
+        "JavaScript", "JS", "React", "React.js", "HTML", "CSS", "HTML5", "CSS3", "Next.js", "Tailwind", "REST APIs", "Frontend", "Web Development", "UI", "UX", "Responsive Design"
+    ],
+    "Mobile Developer": [
+        "Swift", "Kotlin", "React Native", "Flutter", "iOS Development", "Android Development", "Mobile Design", "Firebase", "App Store", "Play Store"
+    ],
+    "Backend Engineer": [
+        "Python", "Node.js", "Java", "Go", "SQL", "PostgreSQL", "MongoDB", "Redis", "REST APIs", "GraphQL", "Microservices", "Docker", "FastAPI", "Backend", "APIs", "Database Design", "Unit Testing"
+    ],
+    "Product Manager": [
+        "Agile", "User Stories", "Roadmapping", "Market Research", "Jira", "A/B Testing", "Product Strategy", "Stakeholder Management", "UX Research"
+    ],
+    "DevOps Engineer": [
+        "CI/CD", "Kubernetes", "K8s", "Docker", "AWS", "Azure", "GCP", "Terraform", "Jenkins", "Linux", "Monitoring", "Cloud", "Automation", "Git", "SRE"
+    ],
+    "Fullstack Developer": [
+        "JavaScript", "React", "Node.js", "Python", "SQL", "HTML", "CSS", "Next.js", "REST APIs", "Fullstack", "Web Architecture"
+    ],
+    "Cybersecurity Analyst": [
+        "Security", "Cybersecurity", "Network Security", "Penetration Testing", "Pentesting", "Risk Assessment", "Encryption", "SOC", "Vulnerability", "Compliance", "Firewall", "Identity Management"
+    ],
+    "AI/ML Engineer": [
+        "Python", "Deep Learning", "NLP", "Computer Vision", "PyTorch", "TensorFlow", "Model Deployment", "MLOps", "Data Engineering"
+    ],
+    "Data Analyst": [
+        "SQL", "Excel", "Tableau", "Power BI", "Python", "Statistics", "Data Cleaning", "Reporting", "A/B Testing"
+    ],
+    "Cloud Architect": [
+        "AWS", "Azure", "Google Cloud", "Cloud Security", "Serverless", "Networking", "Microservices", "Infrastructure as Code", "Cost Optimization"
+    ],
+    "QA Engineer": [
+        "Selenium", "Automation Testing", "Unit Testing", "Jira", "Regression Testing", "Postman", "API Testing", "CI/CD"
+    ],
+    "Embedded Systems Engineer": [
+        "C", "C++", "RTOS", "Microcontrollers", "Embedded C", "Microprocessors", "I2C/SPI", "Hardware Debugging"
     ]
 }
 
@@ -38,18 +65,25 @@ def get_role_skills(role: str):
         "ux-designer": "UX Designer",
         "frontend": "Frontend Developer",
         "product-manager": "Product Manager",
-        "backend": "Backend Engineer"
+        "backend": "Backend Engineer",
+        "mobile": "Mobile Developer",
+        "devops": "DevOps Engineer",
+        "fullstack": "Fullstack Developer",
+        "security": "Cybersecurity Analyst",
+        "ai-ml": "AI/ML Engineer",
+        "data-analyst": "Data Analyst",
+        "cloud-architect": "Cloud Architect",
+        "qa-engineer": "QA Engineer",
+        "embedded": "Embedded Systems Engineer"
     }
     
     # Normalize input
     target_role = role_map.get(role.lower(), role)
     
-    # Add new role if missing but common
-    if target_role not in ROLE_SKILLS_DB and target_role == "Backend Engineer":
-        ROLE_SKILLS_DB["Backend Engineer"] = ["Python", "SQL", "Docker", "REST APIs", "FastAPI", "PostgreSQL", "Unit Testing"]
-    
-    if target_role not in ROLE_SKILLS_DB and target_role == "Product Manager":
-        ROLE_SKILLS_DB["Product Manager"] = ["Agile", "User Stories", "Roadmapping", "Market Research", "Jira", "A/B Testing"]
-
-    # Default fallback for unknown roles
-    return ROLE_SKILLS_DB.get(target_role, ["Communication", "Problem Solving", "Teamwork", "Adaptability", "Critical Thinking"])
+    # Default fallback for unknown roles - include common tech/soft skills
+    default_skills = [
+        "Communication", "Problem Solving", "Teamwork", "Adaptability", 
+        "Technical Documentation", "Software Principles", "Project Management", 
+        "Critical Thinking", "Professionalism"
+    ]
+    return ROLE_SKILLS_DB.get(target_role, default_skills)

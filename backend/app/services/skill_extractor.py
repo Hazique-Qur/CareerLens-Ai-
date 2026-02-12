@@ -7,11 +7,11 @@ if GEMINI_API_KEY:
 
 def extract_skills_from_resume(resume_text: str):
     if not GEMINI_API_KEY:
-        return json.dumps({
-            "error": "GEMINI_API_KEY is missing. Please add it to your .env file.",
-            "technical_skills": [],
-            "soft_skills": []
-        })
+        return {
+            "error": "GEMINI_API_KEY is missing.",
+            "technical_skills": ["General Tech"],
+            "soft_skills": ["Communication"]
+        }
 
     model = genai.GenerativeModel("gemini-2.0-flash")
     

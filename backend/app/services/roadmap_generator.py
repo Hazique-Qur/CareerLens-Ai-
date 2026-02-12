@@ -117,6 +117,54 @@ ROLE_BASED_FALLBACKS = {
             {"topic": "Database Design & Auth", "description": "Secure user auth and DB schema design.", "difficulty": "Intermediate", "resource_url": "https://auth0.com/blog/"},
             {"topic": "Deployment & DevOps", "description": "Learn to deploy fullstack apps to Vercel/Render.", "difficulty": "Beginner", "resource_url": "https://vercel.com/docs"}
         ]
+    },
+    "Data Engineer": {
+        "projects": ["Real-time Data Pipeline", "Big Data Analytics Platform", "Data Warehouse Schema"],
+        "roadmap": [
+            {"topic": "Big Data with Spark", "description": "Learn distributed data processing.", "difficulty": "Advanced", "resource_url": "https://spark.apache.org/docs/latest/"},
+            {"topic": "ETL Orchestration (Airflow)", "description": "Master workflow management.", "difficulty": "Intermediate", "resource_url": "https://airflow.apache.org/"},
+            {"topic": "Cloud Data Warehousing", "description": "Design schemas in Snowflake or Redshift.", "difficulty": "Intermediate", "resource_url": "https://docs.snowflake.com/"}
+        ]
+    },
+    "Game Developer": {
+        "projects": ["3D Platformer (Unity)", "Multiplayer VR Game", "Physics-based Puzzle Game"],
+        "roadmap": [
+            {"topic": "Game Engine Architecture", "description": "Master C# and Unity scripting.", "difficulty": "Intermediate", "resource_url": "https://learn.unity.com/"},
+            {"topic": "Physics & Shaders", "description": "Learn HLSL and 3D graphics math.", "difficulty": "Advanced", "resource_url": "https://catlikecoding.com/unity/tutorials/"},
+            {"topic": "Animation Systems", "description": "Master Mecanim and procedural animation.", "difficulty": "Intermediate", "resource_url": "https://docs.unity3d.com/Manual/AnimationSection.html"}
+        ]
+    },
+    "Blockchain Engineer": {
+        "projects": ["DeFi Lending Protocol", "NFT Marketplace", "DAO Governance System"],
+        "roadmap": [
+            {"topic": "Smart Contract Dev", "description": "Master Solidity and Hardhat.", "difficulty": "Advanced", "resource_url": "https://cryptozombies.io/"},
+            {"topic": "Cryptography Basics", "description": "Learn PKI and hashing in blockchain.", "difficulty": "Intermediate", "resource_url": "https://www.coursera.org/learn/cryptography"},
+            {"topic": "Web3 Integration", "description": "Connect frontends with Ethers.js.", "difficulty": "Intermediate", "resource_url": "https://docs.ethers.org/v6/"}
+        ]
+    },
+    "Technical Writer": {
+        "projects": ["API Documentation Site", "Software User Guide", "Internal Wiki Architecture"],
+        "roadmap": [
+            {"topic": "Documentation Tools", "description": "Master Markdown and Docusaurus.", "difficulty": "Beginner", "resource_url": "https://docusaurus.io/"},
+            {"topic": "Information Architecture", "description": "Plan complex documentation structures.", "difficulty": "Intermediate", "resource_url": "https://www.writethedocs.org/"},
+            {"topic": "API Docs (Swagger)", "description": "Learn to document REST APIs with OpenAPI.", "difficulty": "Advanced", "resource_url": "https://swagger.io/docs/"}
+        ]
+    },
+    "Security Consultant": {
+        "projects": ["Company Security Audit", "Threat Modeling Report", "Compliance Gap Analysis"],
+        "roadmap": [
+            {"topic": "Risk Management", "description": "Learn ISO 27001 framework.", "difficulty": "Intermediate", "resource_url": "https://www.itgovernance.co.uk/iso27001"},
+            {"topic": "Compliance Standards", "description": "Master SOC2, GDPR, and HIPAA.", "difficulty": "Intermediate", "resource_url": "https://vanta.com/blog/soc-2-compliance"},
+            {"topic": "Cloud Governance", "description": "Secure multi-tenant cloud environments.", "difficulty": "Advanced", "resource_url": "https://cloudsecurityalliance.org/"}
+        ]
+    },
+    "Systems Architect": {
+        "projects": ["High-Availability Cluster", "Legacy System Migration Plan", "Distributed Caching Strategy"],
+        "roadmap": [
+            {"topic": "System Design Patterns", "description": "Advanced scalability and availability.", "difficulty": "Advanced", "resource_url": "https://bytebytego.com/"},
+            {"topic": "Microservices Design", "description": "Master event-driven architectures.", "difficulty": "Advanced", "resource_url": "https://microservices.io/"},
+            {"topic": "Network Protocols", "description": "Deep dive into HTTP, gRPC, and QUIC.", "difficulty": "Advanced", "resource_url": "https://hpbn.co/"}
+        ]
     }
 }
 
@@ -127,7 +175,7 @@ def generate_roadmap(target_role: str, missing_skills: list):
     if "frontend" in role_lower: normalized_role = "Frontend Developer"
     elif "backend" in role_lower: normalized_role = "Backend Engineer"
     elif "data scientist" in role_lower: normalized_role = "Data Scientist"
-    elif "security" in role_lower or "cyber" in role_lower: normalized_role = "Cybersecurity Analyst"
+    elif "security analyst" in role_lower or "cyber" in role_lower: normalized_role = "Cybersecurity Analyst"
     elif "ai" in role_lower or "machine learning" in role_lower: normalized_role = "AI/ML Engineer"
     elif "devops" in role_lower: normalized_role = "DevOps Engineer"
     elif "mobile" in role_lower or "android" in role_lower or "ios" in role_lower: normalized_role = "Mobile Developer"
@@ -138,6 +186,12 @@ def generate_roadmap(target_role: str, missing_skills: list):
     elif "qa" in role_lower or "test" in role_lower: normalized_role = "QA Engineer"
     elif "embedded" in role_lower: normalized_role = "Embedded Systems"
     elif "fullstack" in role_lower: normalized_role = "Fullstack Developer"
+    elif "data engineer" in role_lower: normalized_role = "Data Engineer"
+    elif "game" in role_lower: normalized_role = "Game Developer"
+    elif "blockchain" in role_lower: normalized_role = "Blockchain Engineer"
+    elif "tech" in role_lower and "write" in role_lower: normalized_role = "Technical Writer"
+    elif "security" in role_lower and "consult" in role_lower: normalized_role = "Security Consultant"
+    elif "system" in role_lower and "architect" in role_lower: normalized_role = "Systems Architect"
     
     fallback = ROLE_BASED_FALLBACKS.get(normalized_role, {
         "projects": [
@@ -168,18 +222,48 @@ def generate_roadmap(target_role: str, missing_skills: list):
         }
 
     model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
-    # ... rest of the logic remains similar but with fallback update
+    
     prompt = f"""
     A candidate wants to become a {target_role}.
-    They are missing these skills: {missing_skills}
-    Generate a 3-step learning roadmap, 3 project ideas, and 5 interview questions.
-    Return strictly in JSON format.
+    They are missing these specific skills: {missing_skills}.
+    
+    Generate a deep, professional 5-step learning roadmap to bridge these gaps.
+    
+    Return output strictly in this JSON format:
+    {{
+        "learning_roadmap": [
+            {{
+                "topic": "Topic Name",
+                "description": "Clear 1-sentence learning objective",
+                "difficulty": "Beginner" | "Intermediate" | "Advanced",
+                "resource_url": "URL to official docs or top-tier learning resource"
+            }},
+            ... (exactly 5 steps)
+        ],
+        "project_suggestions": [
+            "Project Title: Brief 1-sentence description including tech stack"
+        ],
+        "interview_questions": [
+            "Technical or behavioral question for this specific role"
+        ]
+    }}
+    
+    CRITICAL: 
+    - Ensure 5 steps in learning_roadmap.
+    - Resources must be real and high-quality (e.g., MDN, official docs, Khan Academy, Coursera).
+    - Projects should be complex enough for a {target_role} portfolio.
     """
 
     try:
         response = model.generate_content(prompt)
         text_response = response.text.replace("```json", "").replace("```", "").strip()
-        return json.loads(text_response)
+        data = json.loads(text_response)
+        
+        # Ensure it has exactly 5 steps or pad it
+        while len(data.get("learning_roadmap", [])) < 5:
+            data["learning_roadmap"].append(fallback["roadmap"][0])
+            
+        return data
     except Exception as e:
         print(f"Roadmap Gemini Error: {str(e)}")
         return {

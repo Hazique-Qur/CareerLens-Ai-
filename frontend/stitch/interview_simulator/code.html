@@ -264,8 +264,59 @@
                     document.getElementById('scoreValue').textContent = "0/10";
                     document.getElementById('scoreCircle').setAttribute('stroke-dasharray', `0, 100`);
 
+                    // Text-to-Speech: AI reads the question
+                    speak(questionText.textContent);
+
                     startTimer();
                 }
+
+                function speak(text) {
+                    if ('speechSynthesis' in window) {
+                        window.speechSynthesis.cancel(); // Stop any current speech
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.pitch = 1.1;
+                        utterance.rate = 1;
+                        const voices = window.speechSynthesis.getVoices();
+                        // Try to find a nice male or female English voice
+                        utterance.voice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) || voices[0];
+                        window.speechSynthesis.speak(utterance);
+                    }
+                }
+
+                // Voice Dictation (Speech-to-Text)
+                let recognition;
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    recognition = new SpeechRecognition();
+                    recognition.continuous = true;
+                    recognition.interimResults = true;
+
+                    recognition.onresult = (event) => {
+                        let interimTranscript = '';
+                        for (let i = event.resultIndex; i < event.results.length; ++i) {
+                            if (event.results[i].isFinal) {
+                                answerArea.value += event.results[i][0].transcript;
+                            }
+                        }
+                    };
+
+                    recognition.onstart = () => {
+                        recordingStatus.classList.remove('opacity-0');
+                    };
+
+                    recognition.onend = () => {
+                        recordingStatus.classList.add('opacity-0');
+                        micToggle.checked = false;
+                    };
+                }
+
+                micToggle.addEventListener('change', () => {
+                    if (micToggle.checked) {
+                        if (recognition) recognition.start();
+                    } else {
+                        if (recognition) recognition.stop();
+                    }
+                });
 
                 updateQuestion();
 
@@ -277,6 +328,7 @@
                     }
 
                     clearInterval(timerInterval);
+                    if (recognition) recognition.stop();
 
                     // Loading state
                     submitBtn.disabled = true;
@@ -291,23 +343,19 @@
 
                     try {
                         const apiHost = window.location.hostname || '127.0.0.1';
+                        const targetRole = data.target_role || "Candidate";
                         const response = await fetch(`http://${apiHost}:9000/api/feedback`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 question: questions[currentIdx] || "Tell me about yourself",
-                                answer: answer
+                                answer: answer,
+                                target_role: targetRole
                             })
                         });
 
                         if (!response.ok) throw new Error('API Error');
-                        // Handle both possible response structures
                         let feedback = await response.json();
-
-                        // Fallback logic if backend returns raw string or partial
-                        if (typeof feedback === 'string') {
-                            try { feedback = JSON.parse(feedback); } catch (e) { }
-                        }
 
                         // Render Feedback
                         const score = feedback.score || 0;
@@ -324,6 +372,16 @@
                         const improvements = feedback.improvements || [];
 
                         document.getElementById('feedbackDetails').innerHTML = `
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                             <div class="bg-primary/10 border border-primary/20 rounded-xl p-3">
+                                 <p class="text-[10px] font-bold text-primary uppercase mb-1">Confidence</p>
+                                 <p class="text-lg font-bold">${feedback.confidence_score || '--'}%</p>
+                             </div>
+                             <div class="bg-accent-green/10 border border-accent-green/20 rounded-xl p-3">
+                                 <p class="text-[10px] font-bold text-accent-green uppercase mb-1">Role Match</p>
+                                 <p class="text-lg font-bold">${score * 10}%</p>
+                             </div>
+                        </div>
                         <div class="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-4">
                             <h4 class="text-emerald-500 font-bold text-sm mb-2 flex items-center gap-2">
                                 <span class="material-symbols-outlined text-sm">check_circle</span> Strengths
@@ -332,7 +390,7 @@
                                 ${strengths.map(s => `<li>${s}</li>`).join('')}
                             </ul>
                         </div>
-                        <div class="bg-amber-500/5 border border-amber-500/20 rounded-xl p-4">
+                        <div class="bg-amber-500/5 border border-amber-500/20 rounded-xl p-4 mt-4">
                             <h4 class="text-amber-500 font-bold text-sm mb-2 flex items-center gap-2">
                                 <span class="material-symbols-outlined text-sm">error</span> Improvements
                             </h4>
@@ -340,16 +398,18 @@
                                 ${improvements.map(i => `<li>${i}</li>`).join('')}
                             </ul>
                         </div>
-                        <button id="nextQuestionBtn" class="w-full mt-4 py-3 border border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-colors">
-                            Next Question
+                        <div class="p-4 bg-primary/10 border border-primary/20 rounded-xl mt-4">
+                            <p class="text-xs font-bold text-primary uppercase mb-1">PRO TIP</p>
+                            <p class="text-sm">Structure your answer using the STAR method (Situation, Task, Action, Result) for better organization.</p>
+                        </div>
+                        <button id="nextQuestionBtn" class="w-full mt-6 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                            Continue to Next Question
                         </button>
                     `;
 
-                        // Bound the next question button dynamically
                         document.getElementById('nextQuestionBtn').addEventListener('click', () => {
                             currentIdx = (currentIdx + 1) % questions.length;
                             updateQuestion();
-                            feedbackSection.scrollIntoView({ behavior: 'smooth' }); // Scroll back up/down if needed
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         });
 
@@ -359,7 +419,7 @@
                         console.error(err);
                         alert('Analysis failed. Try again.');
                         startTimer();
-                        submitBtn.disabled = false; // Re-enable if failed
+                        submitBtn.disabled = false;
                         submitBtn.classList.replace('bg-slate-700', 'bg-primary');
                         submitBtn.innerHTML = `<span>Submit Answer</span><span class="material-symbols-outlined text-sm">send</span>`;
                     }

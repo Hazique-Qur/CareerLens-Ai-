@@ -55,6 +55,24 @@ ROLE_SKILLS_DB = {
     ],
     "Embedded Systems Engineer": [
         "C", "C++", "RTOS", "Microcontrollers", "Embedded C", "Microprocessors", "I2C/SPI", "Hardware Debugging"
+    ],
+    "Data Engineer": [
+        "ETL", "Spark", "Hadoop", "SQL", "Python", "Data Warehousing", "Airflow", "NoSQL", "Snowflake", "Data Pipelines"
+    ],
+    "Game Developer": [
+        "Unity", "C#", "C++", "Unreal Engine", "Game Design", "Shaders", "Physics Engines", "3D Math", "Game Mechanics"
+    ],
+    "Blockchain Engineer": [
+        "Solidity", "Ethereum", "Smart Contracts", "Cryptography", "Web3.js", "Hardhat", "Rust", "Hyperledger", "DeFi"
+    ],
+    "Technical Writer": [
+        "Documentation", "Markdown", "API Documentation", "DITA", "MadCap Flare", "Copywriting", "Instructional Design", "Software Documentation"
+    ],
+    "Security Consultant": [
+        "Risk Assessment", "Compliance", "Security Auditing", "ISO 27001", "Threat Modeling", "Incident Response", "Identity Management"
+    ],
+    "Systems Architect": [
+        "Distributed Systems", "System Design", "Microservices", "Cloud Architecture", "Scalability", "Reliability Engineering", "Network Protocols"
     ]
 }
 
@@ -74,7 +92,13 @@ def get_role_skills(role: str):
         "data-analyst": "Data Analyst",
         "cloud-architect": "Cloud Architect",
         "qa-engineer": "QA Engineer",
-        "embedded": "Embedded Systems Engineer"
+        "embedded": "Embedded Systems Engineer",
+        "data-engineer": "Data Engineer",
+        "game-dev": "Game Developer",
+        "blockchain": "Blockchain Engineer",
+        "technical-writer": "Technical Writer",
+        "security-consultant": "Security Consultant",
+        "architect": "Systems Architect"
     }
     
     # Normalize input

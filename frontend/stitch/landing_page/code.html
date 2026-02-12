@@ -411,7 +411,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- AI Chatbot Widget -->
     <div id="aiChatbot" class="fixed bottom-6 right-6 z-[100] font-display">
-        <!-- Chat FAB -->
         <button id="chatbotFab"
             class="size-16 rounded-full bg-primary text-background-dark shadow-2xl flex items-center justify-center hover:scale-110 transition-transform active:scale-95 group relative">
             <span class="material-symbols-outlined text-3xl">smart_toy</span>
@@ -419,10 +418,8 @@
             </div>
         </button>
 
-        <!-- Chat Window -->
         <div id="chatbotWindow"
             class="absolute bottom-20 right-0 w-80 sm:w-96 h-[500px] bg-background-dark border border-primary/20 rounded-2xl shadow-2xl flex flex-col hidden overflow-hidden">
-            <!-- Header -->
             <div class="p-4 border-b border-primary/10 flex items-center justify-between bg-primary/5">
                 <div class="flex items-center gap-3">
                     <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center">
@@ -441,7 +438,6 @@
                 </button>
             </div>
 
-            <!-- Messages -->
             <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
                 <div class="flex gap-2 max-w-[85%]">
                     <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
@@ -449,18 +445,17 @@
                     </div>
                     <div
                         class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-sm leading-relaxed">
-                        Hello! I'm your CareerLens Assistant. How can I help you today?
+                        Hello! I'm your CareerLens Assistant. How can I help you navigate your career path today?
                     </div>
                 </div>
             </div>
 
-            <!-- Input -->
             <div class="p-4 border-t border-primary/10 bg-background-dark/50">
                 <form id="chatForm" class="flex gap-2">
-                    <input type="text" id="chatInput" placeholder="Ask about career analysis, pricing..."
-                        class="flex-1 bg-white/5 border border-primary/20 rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-primary outline-none transition-all">
+                    <input type="text" id="chatInput" placeholder="Ask about career analysis, roadmaps..."
+                        class="flex-1 bg-white/5 border border-primary/20 rounded-xl px-4 py-2 text-sm text-white focus:ring-1 focus:ring-primary outline-none transition-all">
                     <button type="submit"
-                        class="p-2 bg-primary text-background-dark rounded-xl hover:scale-105 transition-all flex items-center justify-center">
+                        class="p-2 bg-primary text-background-dark rounded-xl hover:scale-105 transition-all text-sm">
                         <span class="material-symbols-outlined">send</span>
                     </button>
                 </form>
@@ -469,7 +464,7 @@
     </div>
 
     <script>
-        // AI Chatbot Logic
+        // Standardized Chatbot Logic
         const chatbotFab = document.getElementById('chatbotFab');
         const chatbotWindow = document.getElementById('chatbotWindow');
         const closeChat = document.getElementById('closeChat');
@@ -477,7 +472,7 @@
         const chatInput = document.getElementById('chatInput');
         const chatMessages = document.getElementById('chatMessages');
 
-        chatbotFab.addEventListener('click', () => {
+        chatbotFab?.addEventListener('click', () => {
             chatbotWindow.classList.toggle('hidden');
             if (!chatbotWindow.classList.contains('hidden')) {
                 chatInput.focus();
@@ -485,38 +480,62 @@
             }
         });
 
-        closeChat.addEventListener('click', () => {
+        closeChat?.addEventListener('click', () => {
             chatbotWindow.classList.add('hidden');
         });
 
-        const responses = {
-            "default": "That's a great question! CareerLens AI uses advanced reasoning to analyze your resume and match it against market demands. We now support over 15+ specialized roles including Cloud Architects, AI Engineers, and Cybersecurity Analysts!",
-            "pricing": "Our Pro plan is just $19/mo and includes unlimited analyses, AI interview mentoring, premium roadmap resources, and priority support.",
-            "how": "It's simple: 1. Upload your resume. 2. Our AI extracts your technical DNA. 3. Get a 100-day actionable roadmap to your dream role.",
-            "hello": "Hi there! I'm your CareerLens Assistant. Looking to switch careers into Cloud, DevOps, or Data Science? I can help you find your path.",
-            "resume": "You can upload your resume in PDF format. We'll automatically identify your core strengths and bridge the gaps for your target role.",
-            "roles": "We support a wide range of roles: Frontend, Backend, Fullstack, Mobile, DevOps, Cloud Architect, Data Scientist, Data Analyst, Product Manager, UX Designer, QA, Security, and AI/ML Engineer!"
-        };
-
-        chatForm.addEventListener('submit', (e) => {
+        chatForm?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const msg = chatInput.value.trim();
-            if (!msg) return;
+            const message = chatInput.value.trim();
+            if (!message) return;
 
-            addMessage(msg, 'user');
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex justify-end';
+            userMsg.innerHTML = `<div class="bg-primary text-background-dark p-3 rounded-2xl rounded-tr-none text-sm max-w-[95%] font-medium">${message}</div>`;
+            chatMessages.appendChild(userMsg);
             chatInput.value = '';
 
-            setTimeout(() => {
-                let response = responses.default;
-                const lowMsg = msg.toLowerCase();
-                if (lowMsg.includes('price') || lowMsg.includes('cost') || lowMsg.includes('plan')) response = responses.pricing;
-                else if (lowMsg.includes('how') || lowMsg.includes('work')) response = responses.how;
-                else if (lowMsg.includes('hello') || lowMsg.includes('hi') || lowMsg.includes('hey')) response = responses.hello;
-                else if (lowMsg.includes('resume') || lowMsg.includes('cv') || lowMsg.includes('file')) response = responses.resume;
-                else if (lowMsg.includes('role') || lowMsg.includes('job') || lowMsg.includes('option')) response = responses.roles;
+            // Add loading
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'flex gap-2 max-w-[85%] animate-pulse';
+            loadingDiv.innerHTML = `
+                <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-xs">smart_toy</span></div>
+                <div class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-xs italic text-slate-400">AI is typing...</div>
+            `;
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                addMessage(response, 'ai');
-            }, 600);
+            try {
+                const apiHost = window.location.hostname || '127.0.0.1';
+                const response = await fetch(`http://${apiHost}:9000/api/chatbot`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+                const data = await response.json();
+                loadingDiv.remove();
+
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'flex gap-2 max-w-[85%]';
+                aiMsg.innerHTML = `
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-xs">smart_toy</span></div>
+                    <div class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-sm leading-relaxed text-slate-300">${data.response}</div>
+                `;
+                chatMessages.appendChild(aiMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (err) {
+                loadingDiv.remove();
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'flex gap-2 max-w-[85%]';
+                errorMsg.innerHTML = `
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-xs">report</span></div>
+                    <div class="bg-accent-red/10 border border-accent-red/20 p-3 rounded-2xl rounded-tl-none text-xs text-accent-red">I'm having trouble connecting to my brain. Please check your connection.</div>
+                `;
+                chatMessages.appendChild(errorMsg);
+            }
         });
 
         function addMessage(text, side) {

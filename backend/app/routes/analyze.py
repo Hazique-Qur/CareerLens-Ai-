@@ -5,8 +5,20 @@ from app.services.rag_retriever import get_role_skills
 from app.services.gap_analyzer import analyze_skill_gap
 from app.services.roadmap_generator import generate_roadmap
 from app.services.interview_mentor import evaluate_interview_answer
+from app.services.chatbot_service import get_chatbot_response
 
 router = APIRouter()
+
+@router.post("/chatbot")
+async def chatbot_respond(
+    payload: dict = Body(...)
+):
+    message = payload.get("message", "")
+    if not message:
+        return {"error": "Message is required"}
+    
+    response = get_chatbot_response(message)
+    return {"response": response}
 
 @router.post("/analyze")
 async def analyze_resume(
@@ -51,9 +63,10 @@ async def get_interview_feedback(
 ):
     question = payload.get("question", "")
     answer = payload.get("answer", "")
+    target_role = payload.get("target_role", "Candidate")
     
     if not question or not answer:
         return {"error": "Question and answer are required"}
         
-    feedback = evaluate_interview_answer(question, answer)
+    feedback = evaluate_interview_answer(question, answer, target_role)
     return feedback

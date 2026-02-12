@@ -55,7 +55,47 @@
         body {
             min-height: max(884px, 100dvh);
         }
+
+        @media print {
+
+            header,
+            nav,
+            #aiChatbot,
+            #historyDropdown,
+            button,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            main {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .glass-card,
+            .bg-surface-dark {
+                background: white !important;
+                border: 1px solid #e2e8f0 !important;
+                box-shadow: none !important;
+            }
+
+            .text-slate-400,
+            .text-slate-500 {
+                color: #64748b !important;
+            }
+
+            .bg-background-dark {
+                background: white !important;
+            }
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
@@ -77,15 +117,34 @@
                 <span class="material-symbols-outlined text-sm">add</span>
                 New Analysis
             </a>
-            <button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
-                <span class="material-symbols-outlined">share</span>
-            </button>
-            <a href="../profile_page/code.html"
-                class="size-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center hover:bg-primary transition-colors group ml-2">
-                <span
-                    class="material-symbols-outlined text-primary text-sm group-hover:text-background-dark">person</span>
-            </a>
-        </div>
+            <div class="flex items-center gap-2">
+                <div class="relative group" id="historyDropdown">
+                    <button
+                        class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-sm">history</span>
+                        History
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+                    </button>
+                    <div class="absolute top-full right-0 mt-2 w-64 bg-surface-dark border border-slate-700 rounded-xl shadow-2xl hidden group-hover:block z-[60] overflow-hidden"
+                        id="historyList">
+                        <div class="p-3 border-b border-slate-700 bg-slate-800/50">
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Recent Analyses
+                            </p>
+                        </div>
+                        <div class="max-h-64 overflow-y-auto custom-scrollbar" id="historyItems">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" id="exportBtn">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+                <a href="../profile_page/code.html"
+                    class="size-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center hover:bg-primary transition-colors group ml-2">
+                    <span
+                        class="material-symbols-outlined text-primary text-sm group-hover:text-background-dark">person</span>
+                </a>
+            </div>
     </header>
     <main class="max-w-3xl mx-auto pb-24">
         <!-- Hero Match Section -->
@@ -113,8 +172,72 @@
                 AI Analysis complete. Bridge the gap with the roadmap below.
             </p>
         </section>
+
+        <!-- Resume Roaster Section -->
+        <section class="px-4 py-2 hidden" id="roasterSection">
+            <div class="bg-accent-red/5 border border-accent-red/20 rounded-2xl p-6 relative overflow-hidden group">
+                <div
+                    class="absolute -right-6 -top-6 size-24 bg-accent-red/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700">
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div
+                        class="size-12 bg-accent-red/20 rounded-xl flex items-center justify-center shrink-0 animate-bounce">
+                        <span class="material-symbols-outlined text-accent-red">local_fire_department</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h4 class="font-bold text-accent-red">Resume Roaster</h4>
+                            <span
+                                class="px-2 py-0.5 bg-accent-red/20 border border-accent-red/30 rounded text-[8px] font-bold uppercase tracking-wider text-accent-red">Brutally
+                                Honest</span>
+                        </div>
+                        <p class="text-sm text-slate-400 italic leading-relaxed" id="roastText">
+                            "This resume is so generic it could be used as a template for 'unemployment'. Let's fix
+                            that."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Skill Breakdown -->
         <section class="px-4 py-6">
+            <div class="flex items-center gap-2 mb-4">
+                <h3 class="text-lg font-bold">Skill Radar Chart</h3>
+            </div>
+            <!-- Radar Chart Area -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
+                <div
+                    class="md:col-span-2 flex items-center justify-center bg-surface-dark/40 border border-slate-800 rounded-xl p-6 relative group overflow-hidden">
+                    <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div id="radarChart" class="w-full aspect-square max-w-[240px]">
+                        <!-- SVG Radar Populated via JS -->
+                    </div>
+                </div>
+                <div class="md:col-span-3 space-y-4">
+                    <div class="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-accent-green text-sm">auto_graph</span>
+                            <span class="text-xs font-bold text-slate-400 tracking-wider">MATCH ANALYSIS</span>
+                        </div>
+                        <p class="text-sm text-slate-300 leading-relaxed" id="radarAnalysis">
+                            Your technical profile is strongest in backend fundamentals but shows growth opportunities
+                            in architecture design.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="p-3 rounded-lg bg-surface-dark border border-slate-800">
+                            <p class="text-[10px] text-slate-500 font-bold uppercase">Strengths</p>
+                            <p class="text-xs text-white" id="strengthLabel">Technical Core</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-surface-dark border border-slate-800">
+                            <p class="text-[10px] text-slate-500 font-bold uppercase">Weakness</p>
+                            <p class="text-xs text-white" id="weaknessLabel">Specialized Tools</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex items-center gap-2 mb-4">
                 <span class="material-symbols-outlined text-primary">analytics</span>
                 <h3 class="text-lg font-bold">Skill Gap Matrix</h3>
@@ -182,6 +305,38 @@
                 <!-- Dynamically populated -->
             </div>
         </section>
+
+        <!-- Live Job Hub -->
+        <section class="p-4 mb-24">
+            <div class="glass-card rounded-2xl p-6 border-primary/20 bg-primary/5 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 size-40 bg-primary/10 rounded-full blur-3xl"></div>
+
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">travel_explore</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Live Job Hub</h3>
+                            <p class="text-xs text-slate-400">Real-time opportunities for your role</p>
+                        </div>
+                    </div>
+                    <span class="flex h-2 w-2 relative">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-green"></span>
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3" id="jobLinksGrid">
+                    <!-- Dynamically populated -->
+                </div>
+
+                <p class="text-[10px] text-slate-500 mt-4 text-center italic">
+                    Links are generated based on your target role analysis.
+                </p>
+            </div>
+        </section>
     </main>
 
     <script>
@@ -192,30 +347,177 @@
                 return;
             }
 
-            const rawData = localStorage.getItem('careerAnalysis');
-            if (!rawData) {
-                window.location.href = '../upload_page/code.html';
-                return;
+            const urlParams = new URLSearchParams(window.location.search);
+            const isComparison = urlParams.get('comparison') === 'true';
+
+            if (isComparison) {
+                const comparisonData = JSON.parse(localStorage.getItem('comparisonData'));
+                if (comparisonData) {
+                    renderComparisonOverlay(comparisonData);
+                }
+            }
+
+            // Load Initial Data
+            loadDashboard();
+            setupHistory();
+
+            // Setup Export
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => {
+                    window.print();
+                });
+            }
+        });
+
+        function renderComparisonOverlay(data) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 z-[200] bg-background-dark overflow-y-auto p-4 sm:p-8 animate-in fade-in zoom-in duration-300';
+            overlay.id = 'comparisonOverlay';
+
+            const r1 = data.role1;
+            const r2 = data.role2;
+            const winner = r1.gap_analysis.match_score >= r2.gap_analysis.match_score ? 1 : 2;
+
+            overlay.innerHTML = `
+                <div class="max-w-5xl mx-auto space-y-8">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-6">
+                        <div>
+                            <h2 class="text-3xl font-black text-white">Role Comparison</h2>
+                            <p class="text-slate-500 text-sm mt-1">AI-driven side-by-side gap analysis</p>
+                        </div>
+                        <button onclick="document.getElementById('comparisonOverlay').remove()" class="size-12 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-slate-700 transition-colors">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+                        <!-- VS Badge -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex size-14 rounded-full bg-primary border-4 border-background-dark items-center justify-center font-black text-background-dark italic shadow-2xl">VS</div>
+
+                        <!-- Role 1 -->
+                        <div class="bg-surface-dark border ${winner === 1 ? 'border-primary shadow-[0_0_30px_-5px_rgba(60,175,246,0.3)]' : 'border-slate-800'} rounded-3xl p-6 space-y-6 relative overflow-hidden">
+                            ${winner === 1 ? '<div class="absolute top-4 right-4 px-3 py-1 bg-primary text-background-dark text-[10px] font-black uppercase rounded-full">Optimal Path</div>' : ''}
+                            <div class="text-center">
+                                <p class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Path A</p>
+                                <h3 class="text-xl font-bold text-white px-8">${r1.target_role}</h3>
+                            </div>
+                            
+                            <div class="flex items-center justify-center py-8">
+                                <div class="relative size-32">
+                                    <svg class="size-full" viewBox="0 0 36 36">
+                                        <path class="stroke-slate-800 fill-none stroke-[3]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="stroke-primary fill-none stroke-[3] rounded-full transition-all duration-1000" stroke-dasharray="${r1.gap_analysis.match_score}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-black text-white">${r1.gap_analysis.match_score}%</span>
+                                        <span class="text-[8px] text-slate-500 font-bold uppercase">Match</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-2">Key Strengths</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${r1.gap_analysis.matched_skills.slice(0, 4).map(s => `<span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded text-[10px] font-medium">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-2">Critical Gaps</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${r1.gap_analysis.missing_skills.slice(0, 4).map(s => `<span class="px-2 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded text-[10px] font-medium">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Role 2 -->
+                        <div class="bg-surface-dark border ${winner === 2 ? 'border-accent-green shadow-[0_0_30px_-5px_rgba(34,197,94,0.3)]' : 'border-slate-800'} rounded-3xl p-6 space-y-6 relative overflow-hidden">
+                            ${winner === 2 ? '<div class="absolute top-4 right-4 px-3 py-1 bg-accent-green text-background-dark text-[10px] font-black uppercase rounded-full">Optimal Path</div>' : ''}
+                            <div class="text-center">
+                                <p class="text-[10px] font-bold text-accent-green uppercase tracking-widest mb-1">Path B</p>
+                                <h3 class="text-xl font-bold text-white px-8">${r2.target_role}</h3>
+                            </div>
+
+                            <div class="flex items-center justify-center py-8">
+                                <div class="relative size-32">
+                                    <svg class="size-full" viewBox="0 0 36 36">
+                                        <path class="stroke-slate-800 fill-none stroke-[3]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="stroke-accent-green fill-none stroke-[3] rounded-full transition-all duration-1000" stroke-dasharray="${r2.gap_analysis.match_score}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-black text-white">${r2.gap_analysis.match_score}%</span>
+                                        <span class="text-[8px] text-slate-500 font-bold uppercase">Match</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-2">Key Strengths</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${r2.gap_analysis.matched_skills.slice(0, 4).map(s => `<span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded text-[10px] font-medium">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-2">Critical Gaps</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${r2.gap_analysis.missing_skills.slice(0, 4).map(s => `<span class="px-2 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded text-[10px] font-medium">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Verdict -->
+                    <div class="p-6 bg-primary/5 border border-primary/20 rounded-3xl">
+                        <h4 class="text-sm font-bold text-primary uppercase mb-3 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">psychology</span> AI Strategic Verdict
+                        </h4>
+                        <p class="text-slate-300 text-sm italic leading-relaxed">
+                            "Based on your current technical DNA, Path ${winner === 1 ? 'A' : 'B'} (${winner === 1 ? r1.target_role : r2.target_role}) offers the most immediate resonance. 
+                            However, Path ${winner === 1 ? 'B' : 'A'} is viable if you prioritize closing the ${winner === 1 ? r2.gap_analysis.missing_skills.length : r1.gap_analysis.missing_skills.length} identified gaps. 
+                            We recommend focusing on Path ${winner === 1 ? 'A' : 'B'} for quick wins, or Path ${winner === 1 ? 'B' : 'A'} for long-term growth."
+                        </p>
+                    </div>
+
+                    <div class="flex justify-center pb-12">
+                        <button onclick="document.getElementById('comparisonOverlay').remove()" class="px-12 py-4 bg-primary text-background-dark font-black rounded-2xl hover:scale-105 transition-all shadow-xl shadow-primary/20">Analyze Individual Path</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function loadDashboard(selectedAnalysis = null) {
+            let data;
+            if (selectedAnalysis) {
+                data = selectedAnalysis;
+            } else {
+                const rawData = localStorage.getItem('careerAnalysis');
+                if (!rawData) {
+                    window.location.href = '../upload_page/code.html';
+                    return;
+                }
+                data = JSON.parse(rawData);
             }
 
             // Load User Profile
             const userProfile = JSON.parse(localStorage.getItem('userProfile'));
             if (userProfile) {
-                // Update Avatar
                 if (userProfile.avatar) {
                     const profileLink = document.querySelector('a[href="../profile_page/code.html"]');
                     if (profileLink) {
                         profileLink.innerHTML = `<img src="${userProfile.avatar}" class="size-full rounded-full border border-primary/30 object-cover" alt="Profile">`;
                     }
                 }
-                // Update Welcome Message (Optional but nice)
                 const heroTitle = document.querySelector('h2.text-2xl.font-bold');
                 if (heroTitle && userProfile.name) {
                     heroTitle.textContent = `Welcome back, ${userProfile.name.split(' ')[0]}!`;
                 }
             }
-
-            const data = JSON.parse(rawData);
 
             // 1. Match Score
             const score = data.gap_analysis.match_score;
@@ -226,12 +528,136 @@
             // 2. Role Title
             document.getElementById('roleTitle').textContent = `Match for ${data.target_role}`;
 
-            // 3. Skills Matrix Matrix
+            // 3. Skills Matrix & Radar Chart
+            renderSkillsMatrix(data);
+            renderRadarChart(data);
+
+            // 4. Strategic Advice
+            const adviceText = document.getElementById('adviceText');
+            if (data.gap_analysis.missing_skills.length > 0) {
+                adviceText.textContent = `To reach senior-level proficiency in ${data.target_role}, prioritize mastering ${data.gap_analysis.missing_skills[0]}. Our analysis shows this skill is currently appearing in 85% of job descriptions for this role.`;
+            } else {
+                adviceText.textContent = `Your profile is an exceptional match for ${data.target_role}. Focus on soft skills and leadership to differentiate yourself further.`;
+            }
+
+            // 5. Roadmap
+            renderRoadmap(data);
+
+            // 6. Projects & Interviews
+            renderProjects(data);
+            renderInterviews(data);
+
+            // 7. Roast & Jobs
+            generateRoast(data.gap_analysis.match_score, data.gap_analysis.missing_skills || []);
+            generateJobLinks(data.target_role);
+        }
+
+        function setupHistory() {
+            const historyItems = document.getElementById('historyItems');
+            const historyHistory = JSON.parse(localStorage.getItem('careerAnalysisHistory') || '[]');
+
+            if (historyHistory.length === 0) {
+                historyItems.innerHTML = '<div class="p-4 text-center text-[10px] text-slate-500">No past analyses found</div>';
+                return;
+            }
+
+            historyItems.innerHTML = historyHistory.map(item => `
+                <div class="p-3 hover:bg-slate-700/50 cursor-pointer transition-colors border-b border-slate-800 last:border-0" onclick='switchAnalysis(${JSON.stringify(item.id)})'>
+                    <div class="flex justify-between items-center mb-1">
+                        <p class="text-[11px] font-bold text-white truncate max-w-[120px]">${item.target_role}</p>
+                        <span class="text-[9px] font-black text-accent-green">${item.gap_analysis.match_score}%</span>
+                    </div>
+                    <p class="text-[9px] text-slate-500">${new Date(item.timestamp).toLocaleDateString()} • ${new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                </div>
+            `).join('');
+        }
+
+        function switchAnalysis(id) {
+            const historyHistory = JSON.parse(localStorage.getItem('careerAnalysisHistory') || '[]');
+            const selection = historyHistory.find(i => i.id === id);
+            if (selection) {
+                loadDashboard(selection);
+                // Close dropdown
+                document.getElementById('historyList').classList.add('hidden');
+                setTimeout(() => document.getElementById('historyList').classList.remove('hidden'), 100);
+            }
+        }
+
+        function renderRadarChart(data) {
+            const matched = data.gap_analysis.matched_skills.length;
+            const missing = data.gap_analysis.missing_skills.length;
+            const total = matched + missing;
+
+            const matchPercent = (matched / total) * 100;
+            const missingPercent = (missing / total) * 100;
+
+            const chartContainer = document.getElementById('radarChart');
+
+            // Simple dynamic SVG Radar
+            const size = 200;
+            const center = size / 2;
+            const radius = 80;
+
+            // 5-axis Radar (Base)
+            const axes = 5;
+            let gridHtml = '';
+            for (let i = 0; i < axes; i++) {
+                const angle = (Math.PI * 2 * i) / axes - Math.PI / 2;
+                const x = center + radius * Math.cos(angle);
+                const y = center + radius * Math.sin(angle);
+                gridHtml += `<line x1="${center}" y1="${center}" x2="${x}" y2="${y}" stroke="#1e293b" stroke-width="1" />`;
+            }
+
+            // Data Points (Simulated based on match score for 5 categories)
+            const score = data.gap_analysis.match_score;
+            const points = [
+                score / 100, // Core Tech
+                Math.min(100, score + 10) / 100, // Fundamentals
+                Math.max(0, score - 20) / 100, // Advanced
+                Math.max(0, score - 5) / 100, // Ecosystem
+                Math.min(100, score + 5) / 100 // Career Level
+            ];
+
+            let pathData = '';
+            points.forEach((p, i) => {
+                const angle = (Math.PI * 2 * i) / axes - Math.PI / 2;
+                const x = center + (radius * p) * Math.cos(angle);
+                const y = center + (radius * p) * Math.sin(angle);
+                pathData += (i === 0 ? 'M' : 'L') + `${x},${y}`;
+            });
+            pathData += 'Z';
+
+            chartContainer.innerHTML = `
+                <svg viewBox="0 0 ${size} ${size}" class="w-full h-full drop-shadow-[0_0_8px_rgba(60,175,246,0.3)]">
+                    <circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
+                    <circle cx="${center}" cy="${center}" r="${radius * 0.6}" fill="none" stroke="#1e293b" stroke-width="1" stroke-dasharray="2 2"/>
+                    ${gridHtml}
+                    <path d="${pathData}" fill="rgba(60, 175, 246, 0.2)" stroke="#3caff6" stroke-width="2" stroke-linejoin="round" />
+                    ${points.map((p, i) => {
+                const angle = (Math.PI * 2 * i) / axes - Math.PI / 2;
+                const x = center + (radius * p) * Math.cos(angle);
+                const y = center + (radius * p) * Math.sin(angle);
+                return `<circle cx="${x}" cy="${y}" r="3" fill="#3caff6" />`;
+            }).join('')}
+                </svg>
+            `;
+
+            // Update Labels
+            document.getElementById('strengthLabel').textContent = data.gap_analysis.matched_skills[0] || "Foundational Skills";
+            document.getElementById('weaknessLabel').textContent = data.gap_analysis.missing_skills[0] || "Advanced Concepts";
+
+            const analysisText = document.getElementById('radarAnalysis');
+            if (score > 80) analysisText.textContent = "Exceptional coverage! Your profile dominates the core technical requirements for this role. Focus on architectural leadership.";
+            else if (score > 50) analysisText.textContent = "Solid foundation. You have the core tools, but need to bridge the gap in specialized workflows and advanced optimizations.";
+            else analysisText.textContent = "Growth phase. Your profile shows raw potential, but significant upskilling is needed in the primary toolstack for this role.";
+        }
+
+        function renderSkillsMatrix(data) {
             const matrixBody = document.getElementById('skillMatrixBody');
             const allSkills = [...new Set([...data.technical_skills, ...data.role_required_skills])].slice(0, 8);
 
             matrixBody.innerHTML = allSkills.map(skill => {
-                const isMatch = data.technical_skills.some(s => s.toLowerCase() === skill.toLowerCase());
+                const isMatch = data.gap_analysis.matched_skills.some(s => s.toLowerCase() === skill.toLowerCase());
                 return `
                     <tr class="border-t border-slate-800/50">
                         <td class="px-4 py-4 font-medium">${skill}</td>
@@ -246,34 +672,21 @@
                     </tr>
                 `;
             }).join('');
+        }
 
-            // Strategic Advice
-            const adviceText = document.getElementById('adviceText');
-            if (data.gap_analysis.missing_skills.length > 0) {
-                adviceText.textContent = `To reach senior-level proficiency in ${data.target_role}, prioritize mastering ${data.gap_analysis.missing_skills[0]}. Our analysis shows this skill is currently appearing in 85% of job descriptions for this role.`;
-            } else {
-                adviceText.textContent = `Your profile is an exceptional match for ${data.target_role}. Focus on soft skills and leadership to differentiate yourself further.`;
-            }
-
-            // 4. Learning Roadmap
+        function renderRoadmap(data) {
             const roadmapContainer = document.getElementById('roadmapList');
             const roadmapSteps = data.roadmap.learning_roadmap;
 
             roadmapContainer.innerHTML = `
             <div class="absolute left-[11px] top-1 bottom-1 w-0.5 bg-slate-800"></div>
             ${roadmapSteps.map((step, index) => {
-                let topic = "";
-                let description = "";
-
-                if (typeof step === 'string') {
-                    topic = step.replace(/^Step \d+:?\s*/i, '').replace(/^Phase \d+:?\s*/i, '');
-                    description = "";
-                } else if (typeof step === 'object') {
-                    topic = step.topic || step.phase || step.step || "Career Milestone";
-                    description = step.description || step.content || step.duration || "";
-                    difficulty = step.difficulty || "Intermediate";
-                    resource = step.resource_url || "#";
-                }
+                const topic = step.topic || "Career Milestone";
+                const description = step.description || "";
+                const difficulty = step.difficulty || "Intermediate";
+                const resource = step.resource_url || "#";
+                const stepId = `step-${index}`;
+                const isCompleted = localStorage.getItem(stepId) === 'true';
 
                 const diffColors = {
                     'Beginner': 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
@@ -284,33 +697,34 @@
 
                 return `
                 <div class="relative group">
-                    <div class="absolute -left-[29px] w-6 h-6 rounded-full ${index === 0 ? 'bg-accent-green' : index === 1 ? 'bg-primary' : 'bg-slate-700'} flex items-center justify-center ring-4 ring-background-dark group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-white text-xs">${index === 0 ? 'check' : index === 1 ? 'play_arrow' : 'lock'}</span>
+                    <div class="absolute -left-[29px] w-6 h-6 rounded-full ${isCompleted ? 'bg-accent-green' : 'bg-slate-700'} flex items-center justify-center ring-4 ring-background-dark group-hover:scale-110 transition-all cursor-pointer" onclick="toggleStep('${stepId}')">
+                        <span class="material-symbols-outlined text-white text-xs">${isCompleted ? 'check' : 'circle'}</span>
                     </div>
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
-                            <h4 class="font-bold text-sm ${index === 0 ? 'text-accent-green' : index === 1 ? 'text-primary' : 'text-slate-300'}">Phase ${index + 1}: ${topic}</h4>
-                            <span class="px-2 py-0.5 rounded text-[8px] font-bold uppercase border ${colorClass}">${difficulty}</span>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between gap-3 mb-1">
+                            <div class="flex items-center gap-3">
+                                <h4 class="font-bold text-sm ${isCompleted ? 'text-slate-500 line-through' : 'text-slate-200'}">Phase ${index + 1}: ${topic}</h4>
+                                <span class="px-2 py-0.5 rounded text-[8px] font-bold uppercase border ${colorClass}">${difficulty}</span>
+                            </div>
+                            <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleStep('${stepId}')" class="rounded border-slate-700 bg-slate-800 text-primary focus:ring-primary size-4 cursor-pointer no-print">
                         </div>
                         ${description ? `<p class="text-xs text-slate-500 mt-1 leading-relaxed">${description}</p>` : ''}
-                        
                         ${resource && resource !== "#" ? `
-                        <a href="${resource}" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-[10px] font-bold text-primary hover:text-white transition-colors group/link">
+                        <a href="${resource}" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-[10px] font-bold text-primary hover:text-white transition-colors group/link no-print">
                             <span class="material-symbols-outlined text-sm">link</span>
                             Recommended Resource
                             <span class="material-symbols-outlined text-sm group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                         </a>
                         ` : ''}
                     </div>
-                </div>
-            `}).join('')}
-        `;
+                </div>`;
+            }).join('')}`;
+        }
 
-            // 5. Project Suggestions
+        function renderProjects(data) {
             const projectContainer = document.getElementById('projectList');
             projectContainer.innerHTML = data.roadmap.project_suggestions.map(project => `
-                <div class="p-5 bg-surface-dark border border-slate-800 rounded-xl hover:border-primary/50 transition-colors cursor-pointer group"
-                     onclick="viewProjectDetails('${project.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
+                <div class="p-5 bg-surface-dark border border-slate-800 rounded-xl hover:border-primary/50 transition-colors cursor-pointer group">
                     <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20">
                         <span class="material-symbols-outlined text-primary">bolt</span>
                     </div>
@@ -318,35 +732,226 @@
                     <p class="text-sm text-slate-400 line-clamp-2">${project}</p>
                 </div>
             `).join('');
+        }
 
-            // 6. Interview Preparation
-            const interviewContainer = document.getElementById('interviewList');
-            interviewContainer.innerHTML = data.roadmap.interview_questions.map(q => `
-                <div class="bg-surface-dark border border-slate-800 rounded-lg overflow-hidden p-4 hover:border-primary/50 cursor-pointer group transition-all" 
-                     onclick="startSpecificInterview('${q.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
-                    <div class="flex items-center justify-between">
-                        <p class="font-medium text-sm text-slate-300 group-hover:text-primary transition-colors">Q: ${q}</p>
-                        <span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-all text-sm">play_circle</span>
+        function renderInterviews(data) {
+            const interviewList = document.getElementById('interviewList');
+            interviewList.innerHTML = (data.roadmap.interview_questions || []).map(q => `
+                <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:border-primary/50 transition-all group cursor-pointer relative overflow-hidden select-none" onclick="openInterviewSimulator('${q.replace(/'/g, "\\'")}')">
+                    <div class="flex justify-between items-start gap-4">
+                        <p class="text-sm font-medium leading-relaxed">${q}</p>
+                        <span class="material-symbols-outlined text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity no-print">forum</span>
+                    </div>
+                    <div class="mt-3 flex items-center justify-between no-print">
+                        <div class="flex items-center gap-1.5">
+                            <span class="size-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(60,175,246,0.5)]"></span>
+                            <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Training Ready</span>
+                        </div>
+                        <div class="px-2.5 py-1 bg-primary/10 text-primary rounded-lg border border-primary/20 text-[10px] font-bold uppercase group-hover:bg-primary group-hover:text-background-dark transition-all">
+                            Practice Now
+                        </div>
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Add this to ensure history dropdown works correctly on mobile/clicks
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('historyDropdown');
+            const list = document.getElementById('historyList');
+            if (dropdown && !dropdown.contains(e.target)) {
+                list.classList.add('hidden');
+            } else if (dropdown && dropdown.contains(e.target)) {
+                list.classList.toggle('hidden');
+            }
         });
 
-        function viewProjectDetails(project) {
-            Swal.fire({
-                title: 'Project Deep-Dive',
-                text: project,
-                icon: 'info',
+        function generateJobLinks(role) {
+            const grid = document.getElementById('jobLinksGrid');
+            if (!grid) return;
+
+            const platforms = [
+                {
+                    name: 'LinkedIn',
+                    icon: 'work',
+                    color: '#0a66c2',
+                    url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(role)}`
+                },
+                {
+                    name: 'Indeed',
+                    icon: 'search',
+                    color: '#2164f3',
+                    url: `https://www.indeed.com/jobs?q=${encodeURIComponent(role)}`
+                },
+                {
+                    name: 'Glassdoor',
+                    icon: 'reviews',
+                    color: '#0caa41',
+                    url: `https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${encodeURIComponent(role)}`
+                },
+                {
+                    name: 'Wellfound',
+                    icon: 'stars',
+                    color: '#000000',
+                    url: `https://wellfound.com/role/l/${encodeURIComponent(role)}`
+                }
+            ];
+
+            grid.innerHTML = platforms.map(p => `
+                <a href="${p.url}" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:border-primary/50 transition-all group">
+                    <div class="size-8 rounded-lg flex items-center justify-center text-white" style="background-color: ${p.color}20">
+                        <span class="material-symbols-outlined text-sm" style="color: ${p.color}">${p.icon}</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 group-hover:text-white transition-colors">${p.name}</span>
+                </a>
+            `).join('');
+        }
+
+        function generateRoast(score, missing) {
+            const roasterSection = document.getElementById('roasterSection');
+            const roastText = document.getElementById('roastText');
+            if (roasterSection && roastText) {
+                roasterSection.classList.remove('hidden');
+
+                const roasts = [
+                    `Match score is ${score}%? I've seen better results from a magic 8-ball.`,
+                    `You're missing ${missing.length} key skills. Your resume is a 'Greatest Hits' of what you don't know.`,
+                    `This resume is so generic it could be used as a template for 'unemployment'.`,
+                    `Wow, ${score}%? Almost perfect. Just like my ex's logic.`,
+                    `I've analyzed your technical DNA. You're about as prepared for this role as a goldfish is for a marathon.`
+                ];
+
+                let roast = roasts[2];
+                if (score > 85) roast = `Wow, ${score}%? You're almost overqualified. Stop making the rest of us look bad.`;
+                else if (score < 30) roast = `Match score: ${score}%. Are you sure you uploaded the right file? This looks like a shopping list.`;
+                else if (missing.length > 5) roast = `You're missing ${missing.length} skills. Your resume has more holes than a block of Swiss cheese.`;
+
+                roastText.textContent = `"${roast}"`;
+            }
+        }
+
+        async function openInterviewSimulator(question) {
+            const { value: answer } = await Swal.fire({
+                title: 'AI Interview Practice',
                 background: '#161d26',
                 color: '#fff',
                 confirmButtonColor: '#3caff6',
-                confirmButtonText: 'Great Idea!'
+                html: `
+                    <div class="text-left space-y-4">
+                        <div class="p-3 bg-primary/10 border border-primary/20 rounded-xl">
+                            <p class="text-xs font-bold text-primary uppercase mb-1">Interviewer asks:</p>
+                            <p class="text-sm italic">"${question}"</p>
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 uppercase">Your Answer:</label>
+                            <textarea id="swal-answer" class="w-full bg-[#0b0e14] border border-slate-700 rounded-xl p-4 text-sm focus:border-primary outline-none h-32 mt-2" placeholder="Type your answer here..."></textarea>
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Submit Answer',
+                preConfirm: () => {
+                    const ans = document.getElementById('swal-answer').value;
+                    if (!ans) {
+                        Swal.showValidationMessage('Please provide an answer first!');
+                    }
+                    return ans;
+                }
             });
+
+            if (answer) {
+                Swal.fire({
+                    title: 'Analyzing...',
+                    html: 'AI is evaluating your response quality...',
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading(),
+                    background: '#161d26',
+                    color: '#fff'
+                });
+
+                try {
+                    const apiHost = window.location.hostname || '127.0.0.1';
+                    const targetRole = document.getElementById('roleTitle').textContent;
+                    const response = await fetch(`http://${apiHost}:9000/api/feedback`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ question, answer, target_role: targetRole })
+                    });
+
+                    if (!response.ok) throw new Error('API Error');
+                    const feedback = await response.json();
+
+                    Swal.fire({
+                        title: feedback.feedback_title || 'AI Feedback',
+                        background: '#161d26',
+                        color: '#fff',
+                        confirmButtonColor: '#3caff6',
+                        html: `
+                            <div class="text-left space-y-4">
+                                <div class="bg-primary/10 border border-primary/20 rounded-xl p-4 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs font-bold text-primary uppercase mb-1">Overall Score</p>
+                                        <p class="text-2xl font-black">${feedback.score}/10</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Confidence</p>
+                                        <p class="text-lg font-bold text-accent-green">${feedback.confidence_score || '--'}%</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-accent-green/10 border border-accent-green/20 rounded-xl">
+                                    <p class="text-xs font-bold text-accent-green uppercase mb-1">Feedback</p>
+                                    <p class="text-sm leading-relaxed">${feedback.feedback_summary}</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="p-3 bg-slate-800 rounded-lg">
+                                        <p class="text-[10px] font-bold text-emerald-500 uppercase mb-1">Strengths</p>
+                                        <p class="text-[11px] leading-tight">${feedback.strengths?.[0] || 'Good clarity'}</p>
+                                    </div>
+                                    <div class="p-3 bg-slate-800 rounded-lg">
+                                        <p class="text-[10px] font-bold text-amber-500 uppercase mb-1">Improvement</p>
+                                        <p class="text-[11px] leading-tight">${feedback.improvements?.[0] || 'Add examples'}</p>
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-primary/10 border border-primary/20 rounded-xl">
+                                    <p class="text-xs font-bold text-primary uppercase mb-1">PRO TIP</p>
+                                    <p class="text-sm">Link your answer back to specific ${targetRole} requirements.</p>
+                                </div>
+                            </div>
+                        `
+                    });
+
+                    // Save to Interview History
+                    const sessionHistory = JSON.parse(localStorage.getItem('interviewSessionHistory') || '[]');
+                    sessionHistory.unshift({
+                        id: 'session_' + Date.now(),
+                        role: targetRole.replace('Match for ', ''),
+                        score: feedback.score,
+                        feedback_summary: feedback.feedback_summary,
+                        timestamp: new Date().toISOString(),
+                        question: question
+                    });
+                    if (sessionHistory.length > 20) sessionHistory.pop();
+                    localStorage.setItem('interviewSessionHistory', JSON.stringify(sessionHistory));
+
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Analysis Failed',
+                        text: 'Could not connect to the AI service. Please try again.',
+                        background: '#161d26',
+                        color: '#fff'
+                    });
+                }
+            }
         }
 
-        function startSpecificInterview(q) {
-            localStorage.setItem('selectedInterviewQuestion', q);
-            window.location.href = '../interview_simulator/code.html';
+        function toggleStep(stepId) {
+            const isCompleted = localStorage.getItem(stepId) === 'true';
+            localStorage.setItem(stepId, !isCompleted);
+            location.reload();
         }
     </script>
     <!-- Bottom Navigation -->
@@ -371,6 +976,115 @@
             </a>
         </div>
     </nav>
+    <!-- AI Chatbot Widget -->
+    <div id="aiChatbot" class="fixed bottom-20 right-6 z-[100] font-display">
+        <button id="chatbotFab"
+            class="size-14 rounded-full bg-primary text-background-dark shadow-2xl flex items-center justify-center hover:scale-110 transition-transform active:scale-95 group relative">
+            <span class="material-symbols-outlined text-2xl">smart_toy</span>
+        </button>
+        <div id="chatbotWindow"
+            class="absolute bottom-16 right-0 w-80 sm:w-96 h-[450px] bg-background-dark border border-primary/20 rounded-2xl shadow-2xl flex flex-col hidden overflow-hidden">
+            <div class="p-4 border-b border-primary/10 flex items-center justify-between bg-primary/5">
+                <div class="flex items-center gap-3">
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-sm">psychology</span>
+                    </div>
+                    <h4 class="font-bold text-xs text-white">CareerLens Assistant</h4>
+                </div>
+                <button id="closeChat" class="p-2 hover:bg-white/5 rounded-lg transition-colors text-slate-400">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                </button>
+            </div>
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
+                <div class="flex gap-2 max-w-[85%]">
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-xs">smart_toy</span>
+                    </div>
+                    <div
+                        class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed text-slate-300">
+                        How can I help you with your roadmap or career path today?
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-primary/10 bg-background-dark/50">
+                <form id="chatForm" class="flex gap-2">
+                    <input type="text" id="chatInput" placeholder="Ask about your roadmap..."
+                        class="flex-1 bg-white/5 border border-primary/20 rounded-xl px-4 py-2 text-xs text-white focus:ring-1 focus:ring-primary outline-none transition-all">
+                    <button type="submit"
+                        class="p-2 bg-primary text-background-dark rounded-xl hover:scale-105 transition-all text-sm">
+                        <span class="material-symbols-outlined text-sm">send</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Universal Chatbot Logic
+        const chatbotFab = document.getElementById('chatbotFab');
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        const closeChat = document.getElementById('closeChat');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        chatbotFab?.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('hidden');
+            if (!chatbotWindow.classList.contains('hidden')) {
+                chatInput.focus();
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        closeChat?.addEventListener('click', () => {
+            chatbotWindow.classList.add('hidden');
+        });
+
+        chatForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex justify-end';
+            userMsg.innerHTML = `<div class="bg-primary text-background-dark p-3 rounded-2xl rounded-tr-none text-xs max-w-[95%] font-medium">${message}</div>`;
+            chatMessages.appendChild(userMsg);
+            chatInput.value = '';
+
+            // Add loading
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'flex gap-2 max-w-[85%] animate-pulse';
+            loadingDiv.innerHTML = `
+                <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-xs">smart_toy</span></div>
+                <div class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-[10px] italic text-slate-400">Thinking...</div>
+            `;
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const apiHost = window.location.hostname || '127.0.0.1';
+                const response = await fetch(`http://${apiHost}:9000/api/chatbot`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const data = await response.json();
+                loadingDiv.remove();
+
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'flex gap-2 max-w-[85%]';
+                aiMsg.innerHTML = `
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-xs">smart_toy</span></div>
+                    <div class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-xs leading-relaxed text-slate-300">${data.response}</div>
+                `;
+                chatMessages.appendChild(aiMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (err) {
+                loadingDiv.remove();
+            }
+        });
+    </script>
 </body>
 
 </html>

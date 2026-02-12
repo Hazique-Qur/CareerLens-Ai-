@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CareerLens AI - Understand Your Career Fit</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3caff6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(60, 175, 246, 0.2);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(60, 175, 246, 0.15) 0%, rgba(16, 27, 34, 1) 100%);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased">
+    <!-- Navigation -->
+    <nav
+        class="flex items-center justify-between px-6 py-4 border-b border-primary/10 bg-background-light dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-3xl">insights</span>
+            <span class="text-xl font-bold tracking-tight">CareerLens AI</span>
+            <div
+                class="ml-4 px-2 py-0.5 bg-primary/20 rounded border border-primary/30 text-[9px] uppercase font-bold text-primary">
+                Step 1 of 4</div>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+            <a class="hover:text-primary transition-colors cursor-pointer"
+                onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})">How It Works</a>
+            <a class="hover:text-primary transition-colors cursor-pointer"
+                onclick="document.getElementById('differentiation').scrollIntoView({behavior: 'smooth'})">Technology</a>
+            <a class="hover:text-primary transition-colors cursor-pointer"
+                onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">Pricing</a>
+        </div>
+        <a href="../auth_page/code.html" id="loginBtn"
+            class="bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all">
+            Login
+        </a>
+    </nav>
+    <!-- Hero Section -->
+    <section
+        class="relative min-h-[90vh] flex flex-col items-center justify-center px-4 py-20 hero-gradient overflow-hidden">
+        <div
+            class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] -z-10">
+        </div>
+        <div class="max-w-4xl w-full text-center space-y-8">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                Next-Gen Career Intelligence
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+                Understand Your <br /> <span class="text-primary">Career Fit</span> With AI
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                Upload your resume. Compare against real job requirements. <br class="hidden md:block" /> Get a
+                personalized roadmap to your dream role.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <a href="../auth_page/code.html"
+                    class="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary text-background-dark px-8 py-4 rounded-xl text-lg font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined">rocket_launch</span>
+                    Analyze My Resume
+                </a>
+                <button id="demoBtn"
+                    class="w-full sm:w-auto px-8 py-4 rounded-xl text-lg font-bold border border-slate-200 dark:border-primary/20 hover:bg-primary/5 transition-colors">
+                    View Demo
+                </button>
+            </div>
+        </div>
+        <!-- Visual: Abstract AI Graph -->
+        <div class="mt-16 w-full max-w-5xl px-4">
+            <div class="relative rounded-2xl border border-primary/20 bg-background-dark/50 p-2 backdrop-blur-sm">
+                <div
+                    class="aspect-[16/9] w-full rounded-xl bg-[#1a2b36] overflow-hidden flex items-center justify-center relative">
+                    <div class="absolute inset-0 opacity-30"
+                        style="background-image: radial-gradient(circle at 2px 2px, #3caff6 1px, transparent 0); background-size: 40px 40px;">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center gap-4">
+                        <div class="flex gap-4 items-end h-48">
+                            <div class="w-12 bg-primary/40 rounded-t-lg h-[40%]"></div>
+                            <div class="w-12 bg-primary/60 rounded-t-lg h-[70%] animate-pulse"></div>
+                            <div class="w-12 bg-primary rounded-t-lg h-[95%]"></div>
+                            <div class="w-12 bg-primary/30 rounded-t-lg h-[55%]"></div>
+                            <div class="w-12 bg-primary/80 rounded-t-lg h-[85%] animate-pulse"></div>
+                        </div>
+                        <div class="text-primary/80 font-mono text-sm tracking-tighter">AI_RESUME_ANALYSIS_ENGINE_V2.0
+                        </div>
+                    </div>
+                    <img class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50"
+                        data-alt="Abstract AI brain network and resume analytics graph"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwYTTBa78kxfxoD4AiD9mlDdZr5ex3OXA3cbxHfUtXTp52MGbQzy0h8o0ZHIVtWuuE1VyHwbE9yi1HCTPPudNo0sA6Oysb_qVhXCGkFXMxUQYKHKsiP1r-Cp4INWvpnl4KxQ4T_v4Oyp9UMOHtIpvxlCks5rDN_kPCmjkBJ_yFhVbKswTxcqt5QIPoObLs_SDhSqkp0lAVW1jBaiOfWojw23wybGfTHgWq_4B5Df6IfqZcNgSJwx0xBtdQfcC6me0hv-EXZuKXKAw" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- How It Works Section -->
+    <section class="py-24 px-6 max-w-7xl mx-auto" id="how-it-works">
+        <div class="text-center mb-16 space-y-4">
+            <h2 class="text-3xl md:text-5xl font-bold">How It Works</h2>
+            <p class="text-slate-500 dark:text-slate-400">Three simple steps to unlock your career potential.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="glass-card p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                <div
+                    class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                    <span class="material-symbols-outlined text-primary text-3xl">upload</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Upload Resume</h3>
+                <p class="text-slate-500 dark:text-slate-400 leading-relaxed">Securely upload your CV in any format. Our
+                    system processes and anonymizes your data instantly.</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="glass-card p-8 rounded-2xl group border-primary/40 bg-primary/5 shadow-2xl shadow-primary/5">
+                <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3">AI Skill Analysis</h3>
+                <p class="text-slate-500 dark:text-slate-400 leading-relaxed">Our reasoning engine extracts deep skills
+                    and matches them against millions of live job market signals.</p>
+            </div>
+            <!-- Step 3 -->
+            <div class="glass-card p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                <div
+                    class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                    <span class="material-symbols-outlined text-primary text-3xl">route</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Personalized Roadmap</h3>
+                <p class="text-slate-500 dark:text-slate-400 leading-relaxed">Receive a step-by-step plan to bridge the
+                    gap between where you are and where you want to be.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Why It's Different Section -->
+    <section class="py-24 px-6 bg-slate-100 dark:bg-background-dark/50 border-y border-primary/10" id="differentiation">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <h2 class="text-4xl md:text-5xl font-black leading-tight">
+                    Not a Chatbot. <br />
+                    <span class="text-primary">A Career Decision Engine.</span>
+                </h2>
+                <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Most AI tools just rewrite your text. CareerLens AI uses multi-step logic to understand the
+                    trajectory of your career and the specific nuances of the tech industry.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-primary/10 p-1 rounded-full">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Multi-step AI reasoning</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Deep logical analysis of your career
+                                path.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-primary/10 p-1 rounded-full">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Market-aligned matching</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Real-time alignment with job demands.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-primary/10 p-1 rounded-full">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Gap analysis scoring</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Quantifiable metrics on skill
+                                deficiencies.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 bg-primary/10 p-1 rounded-full">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Interview preparation</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Automated prep based on your profile.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div
+                    class="aspect-square bg-gradient-to-tr from-primary/30 to-transparent rounded-full blur-3xl absolute -inset-10 opacity-30">
+                </div>
+                <div class="glass-card rounded-2xl p-6 relative z-10 space-y-4">
+                    <div class="flex justify-between items-center pb-4 border-b border-white/5">
+                        <span class="font-bold">Market Fit Score</span>
+                        <span class="text-primary font-bold">84/100</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span>Cloud Architecture</span>
+                                <span>High Match</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                <div class="bg-primary h-full w-[90%]"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span>Distributed Systems</span>
+                                <span>Medium Gap</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                <div class="bg-primary/50 h-full w-[45%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 rounded-lg bg-primary/10 border border-primary/20 text-sm">
+                        <p class="text-primary font-bold mb-1">Strategic Advice:</p>
+                        "Focus on mastering Kubernetes. Current market demand for your target Senior Architect role has
+                        increased by 40% for this specific skill."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Pricing Section -->
+    <section class="py-24 px-6 max-w-7xl mx-auto" id="pricing">
+        <div class="text-center mb-16 space-y-4">
+            <h2 class="text-3xl md:text-5xl font-bold">Simple Pricing</h2>
+            <p class="text-slate-500 dark:text-slate-400">Unlock your full potential with our flexible plans.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-2xl border-white/5 flex flex-col">
+                <h3 class="text-xl font-bold mb-2">Free</h3>
+                <p class="text-3xl font-bold mb-6">$0<span class="text-sm font-normal text-slate-500">/mo</span></p>
+                <ul class="space-y-4 mb-8 text-sm text-slate-500 flex-1">
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> 3 Resume Analyses / mo
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> Basic Gap Analysis</li>
+                </ul>
+                <button
+                    class="w-full py-3 rounded-xl border border-primary/20 hover:bg-primary/5 transition-colors font-bold">Current
+                    Plan</button>
+            </div>
+            <div
+                class="glass-card p-8 rounded-2xl border-primary shadow-2xl shadow-primary/10 relative scale-105 z-10 flex flex-col">
+                <div
+                    class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-background-dark px-4 py-1 rounded-full text-xs font-bold uppercase">
+                    Popular</div>
+                <h3 class="text-xl font-bold mb-2">Pro</h3>
+                <p class="text-3xl font-bold mb-6">$19<span class="text-sm font-normal text-slate-500">/mo</span></p>
+                <ul class="space-y-4 mb-8 text-sm text-slate-400 flex-1">
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> Unlimited Analyses</li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> AI Interview Mentoring
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> Premium Roadmap
+                        Resources</li>
+                </ul>
+                <button
+                    class="w-full py-3 rounded-xl bg-primary text-background-dark hover:scale-105 transition-transform font-bold"
+                    onclick="document.getElementById('loginBtn').click()">Get Started</button>
+            </div>
+            <div class="glass-card p-8 rounded-2xl border-white/5 flex flex-col">
+                <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                <p class="text-3xl font-bold mb-6">Custom</p>
+                <ul class="space-y-4 mb-8 text-sm text-slate-500 flex-1">
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> Team Analytics</li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-primary text-sm">check</span> API Access</li>
+                </ul>
+                <button
+                    class="w-full py-3 rounded-xl border border-primary/20 hover:bg-primary/5 transition-colors font-bold">Contact
+                    Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-24 px-6 text-center">
+        <div class="max-w-3xl mx-auto glass-card p-12 rounded-[2rem] border-primary/20 relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to see your <br /> career gap?</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+                Join thousands of professionals optimizing their career path with data-driven AI insights.
+            </p>
+            <a href="../auth_page/code.html"
+                class="bg-primary text-background-dark px-10 py-5 rounded-xl text-xl font-bold hover:scale-105 transition-transform shadow-xl shadow-primary/20">
+                Analyze Now
+            </a>
+            <div class="mt-8 flex items-center justify-center gap-8 grayscale opacity-50">
+                <span class="material-symbols-outlined text-3xl">shield_person</span>
+                <span class="material-symbols-outlined text-3xl">verified</span>
+                <span class="material-symbols-outlined text-3xl">lock</span>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="border-t border-primary/10 pt-16 pb-8 px-6 bg-background-light dark:bg-[#0a1116]">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-2xl">insights</span>
+                        <span class="text-xl font-bold tracking-tight">CareerLens AI</span>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        Bridging the gap between talent and opportunity with advanced reasoning AI.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Product</h5>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a class="hover:text-primary" href="#">Resume Analysis</a></li>
+                        <li><a class="hover:text-primary" href="#">Skill Gap Map</a></li>
+                        <li><a class="hover:text-primary" href="#">Interview Prep</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Company</h5>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a class="hover:text-primary" href="#">About Us</a></li>
+                        <li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+                        <li><a class="hover:text-primary" href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Social</h5>
+                    <div class="flex gap-4">
+                        <a class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                            href="#">
+                            <span class="material-symbols-outlined text-lg">share</span>
+                        </a>
+                        <a class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                            href="#">
+                            <span class="material-symbols-outlined text-lg">public</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+                <p>© 2024 CareerLens AI. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a class="hover:text-primary" href="#">Security</a>
+                    <a class="hover:text-primary" href="#">Status</a>
+                    <a class="hover:text-primary" href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- AI Chatbot Widget -->
+    <div id="aiChatbot" class="fixed bottom-6 right-6 z-[100] font-display">
+        <!-- Chat FAB -->
+        <button id="chatbotFab"
+            class="size-16 rounded-full bg-primary text-background-dark shadow-2xl flex items-center justify-center hover:scale-110 transition-transform active:scale-95 group relative">
+            <span class="material-symbols-outlined text-3xl">smart_toy</span>
+            <div class="absolute -top-1 -right-1 size-4 bg-accent-green rounded-full border-2 border-background-dark">
+            </div>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatbotWindow"
+            class="absolute bottom-20 right-0 w-80 sm:w-96 h-[500px] bg-background-dark border border-primary/20 rounded-2xl shadow-2xl flex flex-col hidden overflow-hidden">
+            <!-- Header -->
+            <div class="p-4 border-b border-primary/10 flex items-center justify-between bg-primary/5">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">psychology</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm">CareerLens Assistant</h4>
+                        <div class="flex items-center gap-1.5">
+                            <span class="size-1.5 bg-accent-green rounded-full animate-pulse"></span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">AI Online</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="closeChat" class="p-2 hover:bg-white/5 rounded-lg transition-colors text-slate-400">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <!-- Messages -->
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
+                <div class="flex gap-2 max-w-[85%]">
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-xs">smart_toy</span>
+                    </div>
+                    <div
+                        class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-sm leading-relaxed">
+                        Hello! I'm your CareerLens Assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="p-4 border-t border-primary/10 bg-background-dark/50">
+                <form id="chatForm" class="flex gap-2">
+                    <input type="text" id="chatInput" placeholder="Ask about career analysis, pricing..."
+                        class="flex-1 bg-white/5 border border-primary/20 rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-primary outline-none transition-all">
+                    <button type="submit"
+                        class="p-2 bg-primary text-background-dark rounded-xl hover:scale-105 transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined">send</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AI Chatbot Logic
+        const chatbotFab = document.getElementById('chatbotFab');
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        const closeChat = document.getElementById('closeChat');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        chatbotFab.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('hidden');
+            if (!chatbotWindow.classList.contains('hidden')) {
+                chatInput.focus();
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatbotWindow.classList.add('hidden');
+        });
+
+        const responses = {
+            "default": "That's a great question! CareerLens AI uses advanced reasoning to analyze your resume and match it against market demands. Try uploading your resume to see the magic!",
+            "pricing": "Our Pro plan is just $19/mo and includes unlimited analyses, AI interview mentoring, and premium roadmap resources.",
+            "how": "It's simple: 1. Upload your resume. 2. Our AI analyzes your skills. 3. Get a personalized roadmap to your dream role.",
+            "hello": "Hi there! I'm here to help you navigate your career path. Ask me anything about our platform.",
+            "resume": "You can upload your resume in PDF format. We'll extract your skills and compare them to the requirements of your target role."
+        };
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const msg = chatInput.value.trim();
+            if (!msg) return;
+
+            addMessage(msg, 'user');
+            chatInput.value = '';
+
+            setTimeout(() => {
+                let response = responses.default;
+                const lowMsg = msg.toLowerCase();
+                if (lowMsg.includes('price') || lowMsg.includes('cost')) response = responses.pricing;
+                else if (lowMsg.includes('how')) response = responses.how;
+                else if (lowMsg.includes('hello') || lowMsg.includes('hi')) response = responses.hello;
+                else if (lowMsg.includes('resume') || lowMsg.includes('cv')) response = responses.resume;
+
+                addMessage(response, 'ai');
+            }, 600);
+        });
+
+        function addMessage(text, side) {
+            const div = document.createElement('div');
+            div.className = side === 'user' ? 'flex justify-end' : 'flex gap-2 max-w-[85%]';
+
+            if (side === 'user') {
+                div.innerHTML = `
+                    <div class="bg-primary text-background-dark p-3 rounded-2xl rounded-tr-none text-sm max-w-[95%]">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                div.innerHTML = `
+                    <div class="size-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-xs">smart_toy</span>
+                    </div>
+                    <div class="bg-primary/10 border border-primary/10 p-3 rounded-2xl rounded-tl-none text-sm leading-relaxed">
+                        ${text}
+                    </div>
+                `;
+            }
+
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Check Session Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                const loginBtn = document.getElementById('loginBtn');
+                if (loginBtn) {
+                    loginBtn.textContent = 'Dashboard';
+                    loginBtn.href = '../dashboard/code.html';
+                }
+
+                const ctaLinks = document.querySelectorAll('a[href="../auth_page/code.html"]');
+                ctaLinks.forEach(link => {
+                    link.href = '../upload_page/code.html';
+                });
+            }
+        });
+
+        // Mock Payment Flow
+        function handlePayment() {
+            Swal.fire({
+                title: 'Upgrade to Pro',
+                html: `
+                    <div class="text-left">
+                        <p class="mb-4 text-sm text-slate-500">Complete your purchase to unlock unlimited AI analysis.</p>
+                        <div class="space-y-3">
+                            <input type="text" placeholder="Card Number (4242 4242 4242 4242)" class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-transparent" value="4242 4242 4242 4242">
+                            <div class="flex gap-3">
+                                <input type="text" placeholder="MM/YY" class="w-1/2 p-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-transparent" value="12/28">
+                                <input type="text" placeholder="CVC" class="w-1/2 p-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-transparent" value="123">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center text-sm font-bold">
+                            <span>Total</span>
+                            <span class="text-xl">$19.00</span>
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Pay Now',
+                confirmButtonColor: '#3caff6',
+                background: '#161d26',
+                color: '#fff',
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve()
+                        }, 2000)
+                    })
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.setItem('isPremium', 'true');
+                    Swal.fire({
+                        title: 'Payment Successful!',
+                        text: 'Welcome to CareerLens AI Pro.',
+                        icon: 'success',
+                        background: '#161d26',
+                        color: '#fff',
+                        confirmButtonColor: '#3caff6'
+                    }).then(() => {
+                        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                        if (isLoggedIn) {
+                            window.location.href = '../upload_page/code.html';
+                        } else {
+                            window.location.href = '../auth_page/code.html';
+                        }
+                    });
+                }
+            })
+        }
+
+        const getStartedBtns = document.querySelectorAll('button[onclick*="loginBtn"]');
+        getStartedBtns.forEach(btn => {
+            btn.onclick = null;
+            btn.addEventListener('click', handlePayment);
+        });
+
+        const demoBtn = document.getElementById('demoBtn');
+        demoBtn.addEventListener('click', () => {
+            const demoData = {
+                "match_score": 88,
+                "target_role": "Senior Data Scientist",
+                "technical_skills": ["Python", "PyTorch", "SQL", "Cloud Computing"],
+                "soft_skills": ["Leadership", "Communication"],
+                "gap_analysis": {
+                    "match_score": 88,
+                    "missing_skills": ["Kubernetes", "Apache Spark"],
+                    "skill_match_details": [
+                        { "skill": "Python", "status": "match" },
+                        { "skill": "Kubernetes", "status": "gap" }
+                    ]
+                },
+                "roadmap": {
+                    "learning_roadmap": [
+                        { "step": 1, "topic": "Big Data Engineering", "duration": "4 weeks", "resources": ["Spark Official Docs", "Coursera"] },
+                        { "step": 2, "topic": "MLOps with K8s", "duration": "6 weeks", "resources": ["Kubernetes Handbook"] }
+                    ],
+                    "project_suggestions": [
+                        "Real-time Fraud Detection System",
+                        "Scalable ML Pipeline on AWS"
+                    ],
+                    "interview_questions": [
+                        "Explain the difference between bagging and boosting.",
+                        "How does Spark manage memory across a cluster?"
+                    ]
+                }
+            };
+            localStorage.setItem('careerAnalysis', JSON.stringify(demoData));
+            window.location.href = '../dashboard/code.html';
+        });
+    </script>
+</body>
+
+</html>

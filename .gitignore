@@ -1,0 +1,21 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment Variables (CRITICAL)
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Frontend Dependencies (if any)
+node_modules/
+dist/
+.parcel-cache/
+.stitch/

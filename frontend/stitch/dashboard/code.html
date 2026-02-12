@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CareerLens AI - Results Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3caff6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0b0e14",
+                        "surface-dark": "#161d26",
+                        "accent-red": "#ef4444",
+                        "accent-green": "#10b981",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .circular-progress {
+            background: radial-gradient(closest-side, #0b0e14 79%, transparent 80% 100%),
+                conic-gradient(#10b981 75%, #161d26 0);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+    <!-- Header -->
+    <header
+        class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-4 justify-between">
+        <div class="flex items-center gap-2">
+            <a href="../upload_page/code.html" class="material-symbols-outlined text-primary">arrow_back</a>
+        </div>
+        <a href="../landing_page/code.html" class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight">CareerLens AI</h1>
+            <div
+                class="px-2 py-0.5 bg-accent-green/20 rounded border border-accent-green/30 text-[9px] uppercase font-bold text-accent-green ml-2">
+                Step 4 of 4</div>
+        </a>
+        <div class="flex items-center gap-2">
+            <a href="../upload_page/code.html"
+                class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary border border-primary/20 rounded-lg text-xs font-bold hover:bg-primary hover:text-background-dark transition-all mr-2">
+                <span class="material-symbols-outlined text-sm">add</span>
+                New Analysis
+            </a>
+            <button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">share</span>
+            </button>
+            <a href="../profile_page/code.html"
+                class="size-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center hover:bg-primary transition-colors group ml-2">
+                <span
+                    class="material-symbols-outlined text-primary text-sm group-hover:text-background-dark">person</span>
+            </a>
+        </div>
+    </header>
+    <main class="max-w-3xl mx-auto pb-24">
+        <!-- Hero Match Section -->
+        <section class="p-6 flex flex-col items-center text-center">
+            <div class="relative w-48 h-48 mb-6">
+                <div class="circular-progress w-full h-full rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                    id="progressCircle">
+                    <div class="text-center">
+                        <span class="text-5xl font-bold text-accent-green" id="matchPercentage">0%</span>
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1">Match Score</p>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-green/10 border border-accent-green/20 text-accent-green text-[10px] font-bold uppercase tracking-wider">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-green"></span>
+                </span>
+                Step 4 of 4: Dashboard
+            </div>
+            <h2 class="text-2xl font-bold mb-2" id="roleTitle">Match for Analytics</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-sm max-w-sm" id="matchDescription">
+                AI Analysis complete. Bridge the gap with the roadmap below.
+            </p>
+        </section>
+        <!-- Skill Breakdown -->
+        <section class="px-4 py-6">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="material-symbols-outlined text-primary">analytics</span>
+                <h3 class="text-lg font-bold">Skill Gap Matrix</h3>
+            </div>
+            <div class="bg-surface-dark/40 border border-slate-800 rounded-xl overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-800/50 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                        <tr>
+                            <th class="px-4 py-3">Requirement</th>
+                            <th class="px-4 py-3">Status</th>
+                            <th class="px-4 py-3">Advice</th>
+                        </tr>
+                    </thead>
+                    <tbody id="skillMatrixBody">
+                        <!-- Dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Strategic Advice Box -->
+            <div class="mt-6 p-5 rounded-xl bg-primary/5 border border-primary/20 relative overflow-hidden"
+                id="adviceBox">
+                <div class="absolute -right-4 -top-4 size-24 bg-primary/10 rounded-full blur-2xl"></div>
+                <div class="flex gap-4">
+                    <div class="size-10 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary">psychology</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-primary mb-1">Strategic AI Advice</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed" id="adviceText">
+                            Analying your profile...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Learning Roadmap -->
+        <section class="px-4 py-6">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="material-symbols-outlined text-primary">route</span>
+                <h3 class="text-lg font-bold">Learning Roadmap</h3>
+            </div>
+            <div class="relative pl-8 space-y-12" id="roadmapList">
+                <!-- Timeline Line -->
+                <div class="absolute left-[11px] top-2 bottom-2 w-0.5 bg-slate-800"></div>
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+        <!-- Project Suggestions -->
+        <section class="px-4 py-6">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="material-symbols-outlined text-primary">lightbulb</span>
+                <h3 class="text-lg font-bold">Project Suggestions</h3>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="projectList">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+        <!-- Interview Questions -->
+        <section class="px-4 py-6">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="material-symbols-outlined text-primary">quiz</span>
+                <h3 class="text-lg font-bold">Interview Preparation</h3>
+            </div>
+            <div class="space-y-3" id="interviewList">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                window.location.href = '../landing_page/code.html';
+                return;
+            }
+
+            const rawData = localStorage.getItem('careerAnalysis');
+            if (!rawData) {
+                window.location.href = '../upload_page/code.html';
+                return;
+            }
+
+            // Load User Avatar
+            const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+            if (userProfile && userProfile.avatar) {
+                const profileImg = document.querySelector('a[href="../profile_page/code.html"] img');
+                if (profileImg) profileImg.src = userProfile.avatar;
+                else {
+                    // If no img tag exists yet (it's a span/div), replace it
+                    const profileContainer = document.querySelector('a[href="../profile_page/code.html"]');
+                    if (profileContainer) {
+                        profileContainer.innerHTML = `<img src="${userProfile.avatar}" class="size-full rounded-full border border-primary/30" alt="Profile">`;
+                    }
+                }
+            }
+
+            const data = JSON.parse(rawData);
+
+            // 1. Match Score
+            const score = data.gap_analysis.match_score;
+            document.getElementById('matchPercentage').textContent = `${score}%`;
+            const progressCircle = document.getElementById('progressCircle');
+            progressCircle.style.background = `radial-gradient(closest-side, #0b0e14 79%, transparent 80% 100%), conic-gradient(#10b981 ${score}%, #161d26 0)`;
+
+            // 2. Role Title
+            document.getElementById('roleTitle').textContent = `Match for ${data.target_role}`;
+
+            // 3. Skills Matrix Matrix
+            const matrixBody = document.getElementById('skillMatrixBody');
+            const allSkills = [...new Set([...data.technical_skills, ...data.role_required_skills])].slice(0, 8);
+
+            matrixBody.innerHTML = allSkills.map(skill => {
+                const isMatch = data.technical_skills.some(s => s.toLowerCase() === skill.toLowerCase());
+                return `
+                    <tr class="border-t border-slate-800/50">
+                        <td class="px-4 py-4 font-medium">${skill}</td>
+                        <td class="px-4 py-4">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${isMatch ? 'bg-accent-green/10 text-accent-green border border-accent-green/20' : 'bg-accent-red/10 text-accent-red border border-accent-red/20'}">
+                                ${isMatch ? 'Found' : 'Missing'}
+                            </span>
+                        </td>
+                        <td class="px-4 py-4 text-xs text-slate-500 italic">
+                            ${isMatch ? 'Proficiency verified.' : 'Critical priority to learn.'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Strategic Advice
+            const adviceText = document.getElementById('adviceText');
+            if (data.gap_analysis.missing_skills.length > 0) {
+                adviceText.textContent = `To reach senior-level proficiency in ${data.target_role}, prioritize mastering ${data.gap_analysis.missing_skills[0]}. Our analysis shows this skill is currently appearing in 85% of job descriptions for this role.`;
+            } else {
+                adviceText.textContent = `Your profile is an exceptional match for ${data.target_role}. Focus on soft skills and leadership to differentiate yourself further.`;
+            }
+
+            // 4. Learning Roadmap
+            const roadmapContainer = document.getElementById('roadmapList');
+            const roadmapSteps = data.roadmap.learning_roadmap;
+
+            roadmapContainer.innerHTML = `
+            <div class="absolute left-[11px] top-1 bottom-1 w-0.5 bg-slate-800"></div>
+            ${roadmapSteps.map((step, index) => {
+                let topic = "";
+                let description = "";
+
+                if (typeof step === 'string') {
+                    topic = step.replace(/^Step \d+:?\s*/i, '').replace(/^Phase \d+:?\s*/i, '');
+                    description = "";
+                } else if (typeof step === 'object') {
+                    topic = step.topic || step.phase || step.step || "Career Milestone";
+                    description = step.description || step.content || step.duration || "";
+                    difficulty = step.difficulty || "Intermediate";
+                    resource = step.resource_url || "#";
+                }
+
+                const diffColors = {
+                    'Beginner': 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
+                    'Intermediate': 'text-primary bg-primary/10 border-primary/20',
+                    'Advanced': 'text-amber-400 bg-amber-400/10 border-amber-400/20'
+                };
+                const colorClass = diffColors[difficulty] || diffColors['Intermediate'];
+
+                return `
+                <div class="relative group">
+                    <div class="absolute -left-[29px] w-6 h-6 rounded-full ${index === 0 ? 'bg-accent-green' : index === 1 ? 'bg-primary' : 'bg-slate-700'} flex items-center justify-center ring-4 ring-background-dark group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-white text-xs">${index === 0 ? 'check' : index === 1 ? 'play_arrow' : 'lock'}</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h4 class="font-bold text-sm ${index === 0 ? 'text-accent-green' : index === 1 ? 'text-primary' : 'text-slate-300'}">Phase ${index + 1}: ${topic}</h4>
+                            <span class="px-2 py-0.5 rounded text-[8px] font-bold uppercase border ${colorClass}">${difficulty}</span>
+                        </div>
+                        ${description ? `<p class="text-xs text-slate-500 mt-1 leading-relaxed">${description}</p>` : ''}
+                        
+                        ${resource && resource !== "#" ? `
+                        <a href="${resource}" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-[10px] font-bold text-primary hover:text-white transition-colors group/link">
+                            <span class="material-symbols-outlined text-sm">link</span>
+                            Recommended Resource
+                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
+                        </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `}).join('')}
+        `;
+
+            // 5. Project Suggestions
+            const projectContainer = document.getElementById('projectList');
+            projectContainer.innerHTML = data.roadmap.project_suggestions.map(project => `
+                <div class="p-5 bg-surface-dark border border-slate-800 rounded-xl hover:border-primary/50 transition-colors cursor-pointer group"
+                     onclick="viewProjectDetails('${project.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20">
+                        <span class="material-symbols-outlined text-primary">bolt</span>
+                    </div>
+                    <h4 class="font-bold mb-2">Project Idea</h4>
+                    <p class="text-sm text-slate-400 line-clamp-2">${project}</p>
+                </div>
+            `).join('');
+
+            // 6. Interview Preparation
+            const interviewContainer = document.getElementById('interviewList');
+            interviewContainer.innerHTML = data.roadmap.interview_questions.map(q => `
+                <div class="bg-surface-dark border border-slate-800 rounded-lg overflow-hidden p-4 hover:border-primary/50 cursor-pointer group transition-all" 
+                     onclick="startSpecificInterview('${q.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
+                    <div class="flex items-center justify-between">
+                        <p class="font-medium text-sm text-slate-300 group-hover:text-primary transition-colors">Q: ${q}</p>
+                        <span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-all text-sm">play_circle</span>
+                    </div>
+                </div>
+            `).join('');
+        });
+
+        function viewProjectDetails(project) {
+            Swal.fire({
+                title: 'Project Deep-Dive',
+                text: project,
+                icon: 'info',
+                background: '#161d26',
+                color: '#fff',
+                confirmButtonColor: '#3caff6',
+                confirmButtonText: 'Great Idea!'
+            });
+        }
+
+        function startSpecificInterview(q) {
+            localStorage.setItem('selectedInterviewQuestion', q);
+            window.location.href = '../interview_simulator/code.html';
+        }
+    </script>
+    <!-- Bottom Navigation -->
+    <nav
+        class="fixed bottom-0 left-0 right-0 bg-surface-dark/95 backdrop-blur-lg border-t border-slate-800 px-4 py-2 z-50">
+        <div class="max-w-md mx-auto flex justify-between">
+            <a class="flex flex-col items-center gap-1 p-2 text-slate-500" href="../profile_page/code.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[10px] font-medium">Profile</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 p-2 text-primary" href="../dashboard/code.html">
+                <span class="material-symbols-outlined font-fill">analytics</span>
+                <span class="text-[10px] font-medium">Results</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 p-2 text-slate-500" href="../interview_simulator/code.html">
+                <span class="material-symbols-outlined">school</span>
+                <span class="text-[10px] font-medium">Simulator</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 p-2 text-slate-500" href="../upload_page/code.html">
+                <span class="material-symbols-outlined">upload</span>
+                <span class="text-[10px] font-medium">Upload</span>
+            </a>
+        </div>
+    </nav>
+</body>
+
+</html>

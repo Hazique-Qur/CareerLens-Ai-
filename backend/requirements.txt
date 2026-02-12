@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+openai
+PyPDF2
+chromadb
+sqlalchemy
+psycopg2-binary
+python-dotenv
+google-generativeai

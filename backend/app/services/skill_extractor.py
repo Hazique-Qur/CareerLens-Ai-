@@ -13,7 +13,7 @@ def extract_skills_from_resume(resume_text: str):
             "soft_skills": ["Communication"]
         }
 
-    model = genai.GenerativeModel("gemini-2.0-flash")
+    model = genai.GenerativeModel("models/gemini-2.0-flash")
     
     prompt = f"""
     Extract technical and professional skills from the following resume text.

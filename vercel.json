@@ -16,6 +16,10 @@
             "dest": "/api/index.py"
         },
         {
+            "src": "/",
+            "dest": "/frontend/stitch/landing_page/code.html"
+        },
+        {
             "src": "/(.*)",
             "dest": "/frontend/stitch/$1"
         }

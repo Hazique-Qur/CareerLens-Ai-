@@ -254,15 +254,23 @@
                     <span class="material-symbols-outlined text-sm">close</span>
                 </button>
             </div>
-            <div id="chatMessages" class="flex-1 overflow-y-auto p-5 space-y-4 scroll-smooth">
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-5 space-y-4 scroll-smooth custom-scrollbar">
                 <div class="flex gap-3 max-w-[85%]">
                     <div class="size-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><span
                             class="material-symbols-outlined text-primary text-xs">robot</span></div>
                     <div
                         class="bg-white/5 border border-white/5 p-4 rounded-2xl rounded-tl-none text-xs leading-relaxed text-slate-300">
-                        Ready to break down your career boundaries. Upload and ask me anything.</div>
+                        Ready to break down your career boundaries. Upload and ask me anything.
+                    </div>
                 </div>
             </div>
+
+            <!-- Suggested Prompts -->
+            <div id="chatbotSuggestions"
+                class="px-5 py-2 flex gap-2 overflow-x-auto no-scrollbar border-t border-white/5 bg-white/5">
+                <!-- Suggestions injected by JS -->
+            </div>
+
             <div class="p-5 bg-background-dark/80 backdrop-blur-sm border-t border-white/5">
                 <form id="chatForm" class="relative group">
                     <input type="text" id="chatInput" placeholder="How do I stand out?"
@@ -275,6 +283,7 @@
             </div>
         </div>
     </div>
+    <script src="../chatbot.js"></script>
 
     <!-- Toast -->
     <div id="toast"
@@ -463,58 +472,6 @@
             }
         });
 
-        // Chatbot
-        const chatbotFab = document.getElementById('chatbotFab');
-        const chatbotWindow = document.getElementById('chatbotWindow');
-        const closeChat = document.getElementById('closeChat');
-        const chatForm = document.getElementById('chatForm');
-        const chatInput = document.getElementById('chatInput');
-        const chatMessages = document.getElementById('chatMessages');
-
-        chatbotFab.addEventListener('click', () => {
-            chatbotWindow.classList.toggle('hidden');
-            if (!chatbotWindow.classList.contains('hidden')) {
-                chatInput.focus();
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-        });
-
-        closeChat.addEventListener('click', () => chatbotWindow.classList.add('hidden'));
-
-        chatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const msg = chatInput.value.trim();
-            if (!msg) return;
-
-            const userDiv = document.createElement('div');
-            userDiv.className = 'flex justify-end';
-            userDiv.innerHTML = `<div class="bg-primary text-background-dark px-4 py-2.5 rounded-2xl rounded-tr-none text-xs font-bold">${msg}</div>`;
-            chatMessages.appendChild(userDiv);
-            chatInput.value = '';
-
-            const loadDiv = document.createElement('div');
-            loadDiv.className = 'flex gap-3 max-w-[85%] animate-pulse';
-            loadDiv.innerHTML = `<div class="size-8 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-xs">robot</span></div><div class="bg-white/5 p-3 rounded-2xl italic text-[10px] text-slate-500">Analyzing query...</div>`;
-            chatMessages.appendChild(loadDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            try {
-                const apiHost = window.location.hostname || '127.0.0.1';
-                const res = await fetch(`http://${apiHost}:9000/api/chatbot`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
-                });
-                const data = await res.json();
-                loadDiv.remove();
-
-                const aiDiv = document.createElement('div');
-                aiDiv.className = 'flex gap-3 max-w-[85%]';
-                aiDiv.innerHTML = `<div class="size-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-xs">psychology</span></div><div class="bg-white/5 border border-white/5 p-3.5 rounded-2xl rounded-tl-none text-xs text-slate-300 leading-relaxed">${data.response}</div>`;
-                chatMessages.appendChild(aiDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            } catch (ignore) { loadDiv.remove(); }
-        });
     </script>
 </body>
 

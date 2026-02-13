@@ -688,6 +688,65 @@
             window.location.href = '../dashboard/code.html';
         });
     </script>
+    <!-- AI Chatbot FAB -->
+    <div id="aiChatbot" class="fixed bottom-8 right-6 z-[100] group">
+        <button id="chatbotFab"
+            class="size-14 rounded-2xl bg-primary text-background-dark shadow-2xl flex items-center justify-center hover:scale-110 hover:rotate-6 transition-all active:scale-95 relative shadow-primary/20 overflow-hidden">
+            <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span class="material-symbols-outlined text-2xl font-black">smart_toy</span>
+        </button>
+        <div id="chatbotWindow"
+            class="absolute bottom-16 right-0 w-80 sm:w-96 h-[500px] bg-surface-dark border border-white/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col hidden overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+            <div class="p-5 border-b border-white/5 flex items-center justify-between bg-primary/5">
+                <div class="flex items-center gap-3">
+                    <div class="size-9 rounded-xl bg-primary/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-sm font-black">psychology</span>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-xs text-white uppercase tracking-widest">Career Advisor</h4>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <span
+                                class="size-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                            <span class="text-[9px] font-bold text-slate-500 uppercase">System Active</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="closeChat" class="p-2 hover:bg-white/5 rounded-xl transition-colors text-slate-500">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                </button>
+            </div>
+            <div id="chatMessages" class="flex-1 overflow-y-auto p-5 space-y-4 scroll-smooth custom-scrollbar">
+                <div class="flex gap-3 max-w-[85%]">
+                    <div class="size-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-xs">robot</span>
+                    </div>
+                    <div
+                        class="bg-white/5 border border-white/5 p-4 rounded-2xl rounded-tl-none text-xs leading-relaxed text-slate-300">
+                        Welcome to CareerLens AI. I'm your career counselor. How can I help you navigate your journey
+                        today?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested Prompts -->
+            <div id="chatbotSuggestions"
+                class="px-5 py-2 flex gap-2 overflow-x-auto no-scrollbar border-t border-white/5 bg-white/5">
+                <!-- Suggestions injected by JS -->
+            </div>
+
+            <div class="p-5 bg-background-dark/80 backdrop-blur-sm border-t border-white/5">
+                <form id="chatForm" class="relative group">
+                    <input type="text" id="chatInput" placeholder="Ask about career goals..."
+                        class="w-full bg-white/5 border border-white/10 rounded-2xl pl-5 pr-12 py-3.5 text-xs text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-slate-700">
+                    <button type="submit"
+                        class="absolute right-2 top-1.5 size-10 bg-primary text-background-dark rounded-xl flex items-center justify-center hover:scale-105 transition-all shadow-lg active:scale-95">
+                        <span class="material-symbols-outlined text-sm font-black">send</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../chatbot.js"></script>
 </body>
 
 </html>

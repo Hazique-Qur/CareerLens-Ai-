@@ -14,10 +14,12 @@ async def chatbot_respond(
     payload: dict = Body(...)
 ):
     message = payload.get("message", "")
+    context = payload.get("context", {}) # New: target_role, score, missing_skills
+    
     if not message:
         return {"error": "Message is required"}
     
-    response = get_chatbot_response(message)
+    response = get_chatbot_response(message, context)
     return {"response": response}
 
 @router.post("/analyze")

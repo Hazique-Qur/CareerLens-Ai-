@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
         rel="stylesheet" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0"
         rel="stylesheet" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -56,6 +56,66 @@
     <style>
         body {
             min-height: max(884px, 100dvh);
+        }
+
+        /* === EXTREME Icon Stability Fix === */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            overflow: hidden;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        .material-symbols-outlined.text-xs {
+            font-size: 12px;
+            width: 12px;
+            height: 12px;
+        }
+
+        .material-symbols-outlined.text-sm {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .material-symbols-outlined.text-base {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .material-symbols-outlined.text-xl {
+            font-size: 22px;
+            width: 22px;
+            height: 22px;
+        }
+
+        .material-symbols-outlined.text-2xl {
+            font-size: 28px;
+            width: 28px;
+            height: 28px;
+        }
+
+        .material-symbols-outlined.text-4xl {
+            font-size: 40px;
+            width: 40px;
+            height: 40px;
         }
     </style>
 </head>
@@ -288,10 +348,12 @@
                 <p class="text-3xl font-bold mb-6">$0<span class="text-sm font-normal text-slate-500">/mo</span></p>
                 <ul class="space-y-4 mb-8 text-sm text-slate-500 flex-1">
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> 3 Resume Analyses / mo
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> 3 Resume
+                        Analyses / mo
                     </li>
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Basic Gap Analysis</li>
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Basic Gap
+                        Analysis</li>
                 </ul>
                 <button
                     class="w-full py-3 rounded-xl border border-primary/20 hover:bg-primary/5 transition-colors font-bold">Current
@@ -306,12 +368,15 @@
                 <p class="text-3xl font-bold mb-6">$19<span class="text-sm font-normal text-slate-500">/mo</span></p>
                 <ul class="space-y-4 mb-8 text-sm text-slate-400 flex-1">
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Unlimited Analyses</li>
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Unlimited
+                        Analyses</li>
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> AI Interview Mentoring
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> AI Interview
+                        Mentoring
                     </li>
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Premium Roadmap
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Premium
+                        Roadmap
                         Resources</li>
                 </ul>
                 <button
@@ -323,9 +388,11 @@
                 <p class="text-3xl font-bold mb-6">Custom</p>
                 <ul class="space-y-4 mb-8 text-sm text-slate-500 flex-1">
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Team Analytics</li>
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> Team
+                        Analytics</li>
                     <li class="flex items-center gap-2"><span
-                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> API Access</li>
+                            class="material-symbols-outlined notranslate text-primary text-sm">check</span> API Access
+                    </li>
                 </ul>
                 <button
                     class="w-full py-3 rounded-xl border border-primary/20 hover:bg-primary/5 transition-colors font-bold">Contact
@@ -700,7 +767,8 @@
             <div class="p-5 border-b border-white/5 flex items-center justify-between bg-primary/5">
                 <div class="flex items-center gap-3">
                     <div class="size-9 rounded-xl bg-primary/20 flex items-center justify-center">
-                        <span class="material-symbols-outlined notranslate text-primary text-sm font-black">psychology</span>
+                        <span
+                            class="material-symbols-outlined notranslate text-primary text-sm font-black">psychology</span>
                     </div>
                     <div>
                         <h4 class="font-black text-xs text-white uppercase tracking-widest">Career Advisor</h4>

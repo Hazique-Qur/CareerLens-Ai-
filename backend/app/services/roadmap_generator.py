@@ -221,7 +221,7 @@ def generate_roadmap(target_role: str, missing_skills: list):
             ]
         }
 
-    model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
+    model = genai.GenerativeModel("models/gemini-pro-latest")
     
     prompt = f"""
     A candidate wants to become a {target_role}.

@@ -8,7 +8,7 @@ def get_chatbot_response(message: str, context: dict = None):
     if not GEMINI_API_KEY:
         return "I'm currently in offline mode. Please configure the Gemini API key to enable full AI capabilities."
 
-    model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
+    model = genai.GenerativeModel("models/gemini-flash-latest")
     
     # 1. Build Context String
     context_str = ""

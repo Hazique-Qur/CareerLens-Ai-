@@ -15,7 +15,7 @@ def evaluate_interview_answer(question: str, answer: str, target_role: str = "Ca
             "improvements": ["Provide more technical examples"]
         }
 
-    model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
+    model = genai.GenerativeModel("models/gemini-pro-latest")
     
     prompt = f"""
     You are an expert technical interviewer for a {target_role} position. 

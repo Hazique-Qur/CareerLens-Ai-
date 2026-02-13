@@ -47,6 +47,7 @@
             min-height: max(884px, 100dvh);
         }
     </style>
+    <script src="../config.js"></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
@@ -342,9 +343,8 @@
                     document.getElementById('feedbackDetails').innerHTML = '';
 
                     try {
-                        const apiHost = window.location.hostname || '127.0.0.1';
                         const targetRole = data.target_role || "Candidate";
-                        const response = await fetch(`http://${apiHost}:9000/api/feedback`, {
+                        const response = await fetch(`${CAREERLENS_CONFIG.API_BASE}/api/feedback`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({

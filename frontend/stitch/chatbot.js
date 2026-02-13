@@ -60,10 +60,9 @@ class CareerLensChatbot {
         const loadingId = this.addLoadingIndicator();
 
         try {
-            const apiHost = window.location.hostname || '127.0.0.1';
             const context = this.getCareerContext();
 
-            const response = await fetch(`http://${apiHost}:9000/api/chatbot`, {
+            const response = await fetch(`${CAREERLENS_CONFIG.API_BASE}/api/chatbot`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message, context })

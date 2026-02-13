@@ -1,0 +1,10 @@
+[build]
+  publish = "frontend/stitch"
+
+# No build command needed — static HTML site
+
+# Redirect all 404s to landing page for SPA-like behavior
+[[redirects]]
+  from = "/*"
+  to = "/landing_page/code.html"
+  status = 200

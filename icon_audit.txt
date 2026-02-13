@@ -1,0 +1,49 @@
+﻿material-symbols-outlined animate-spin text-sm">
+material-symbols-outlined group-hover:text-primary transition-colors">
+material-symbols-outlined notranslate absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
+material-symbols-outlined notranslate fill-1">
+material-symbols-outlined notranslate font-black">
+material-symbols-outlined notranslate font-fill">
+material-symbols-outlined notranslate text-[14px]">
+material-symbols-outlined notranslate text-[16px]">
+material-symbols-outlined notranslate text-2xl font-black">
+material-symbols-outlined notranslate text-2xl">
+material-symbols-outlined notranslate text-3xl">
+material-symbols-outlined notranslate text-4xl text-primary">
+material-symbols-outlined notranslate text-accent-green text-sm">
+material-symbols-outlined notranslate text-accent-red">
+material-symbols-outlined notranslate text-base">
+material-symbols-outlined notranslate text-emerald-500 text-xl">
+material-symbols-outlined notranslate text-lg">
+material-symbols-outlined notranslate text-primary group-hover:text-background-dark">
+material-symbols-outlined notranslate text-primary text-2xl">
+material-symbols-outlined notranslate text-primary text-3xl">
+material-symbols-outlined notranslate text-primary text-4xl">
+material-symbols-outlined notranslate text-primary text-lg">
+material-symbols-outlined notranslate text-primary text-sm font-black">
+material-symbols-outlined notranslate text-primary text-sm group-hover:text-background-dark">
+material-symbols-outlined notranslate text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity no-print">
+material-symbols-outlined notranslate text-primary text-sm">
+material-symbols-outlined notranslate text-primary text-xs">
+material-symbols-outlined notranslate text-primary">
+material-symbols-outlined notranslate text-red-500 text-xl">
+material-symbols-outlined notranslate text-slate-600 group-hover:text-red-500 transition-colors">
+material-symbols-outlined notranslate text-slate-600 group-hover:text-white transition-colors">
+material-symbols-outlined notranslate text-slate-600">
+material-symbols-outlined notranslate text-slate-700 text-6xl mb-4">
+material-symbols-outlined notranslate text-sm font-black">
+material-symbols-outlined notranslate text-sm group-hover/link:translate-x-0.5 transition-transform">
+material-symbols-outlined notranslate text-sm" style="color: ${p.color}">
+material-symbols-outlined notranslate text-sm">
+material-symbols-outlined notranslate text-white text-2xl">
+material-symbols-outlined notranslate text-white text-xs">
+material-symbols-outlined notranslate text-xl">
+material-symbols-outlined notranslate text-xs">
+material-symbols-outlined notranslate">
+material-symbols-outlined scale-90">
+material-symbols-outlined text-primary text-sm group-hover:text-background-dark">
+material-symbols-outlined text-primary">
+material-symbols-outlined text-slate-400 hover:text-primary transition-colors">
+material-symbols-outlined text-sm">
+material-symbols-outlined text-white text-2xl">
+material-symbols-outlined">

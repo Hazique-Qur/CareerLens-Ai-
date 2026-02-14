@@ -14,7 +14,9 @@ def extract_skills_from_resume(resume_text: str, role_skills: list = None):
         "postgresql", "mongodb", "redis", "kubernetes", "terraform", "jenkins", "ci/cd", "git", "github", 
         "azure", "gcp", "google cloud", "tableau", "power bi", "pandas", "numpy", "scikit-learn", "tensorflow", 
         "pytorch", "keras", "opencv", "nlp", "spark", "hadoop", "airflow", "snowflake", "graphql", "rest api", 
-        "microservices", "agile", "scrum", "jira", "ios", "android", "swift", "kotlin", "flutter", "react native"
+        "microservices", "agile", "scrum", "jira", "ios", "android", "swift", "kotlin", "flutter", "react native",
+        "data science", "r programming", "matplotlib", "seaborn", "pyspark", "bigquery", "redshift", "dbt", 
+        "looker", "excel", "statistics", "data visualization", "predictive modeling"
     ]
     
     # Add role-specific hints if provided

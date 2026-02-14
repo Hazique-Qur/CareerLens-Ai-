@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Interview History - CareerLens AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3caff6",
+                        "background-dark": "#0b0e14",
+                        "surface-dark": "#1a2b36",
+                        "accent-red": "#ff4d4d",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0b0e14;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <script src="../config.js"></script>
+</head>
+
+<body class="text-white min-h-screen flex flex-col pb-20">
+    <!-- Header -->
+    <header
+        class="fixed top-0 left-0 right-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md border-b border-primary/10 p-4 md:px-8">
+        <div class="flex items-center gap-4">
+            <a href="../dashboard/code.html"
+                class="material-symbols-outlined notranslate text-slate-400 hover:text-primary transition-colors">arrow_back</a>
+            <div class="flex items-center gap-2">
+                <div class="bg-primary p-1.5 rounded-lg">
+                    <span class="material-symbols-outlined notranslate text-white text-xl">insights</span>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight text-white">Interview <span
+                        class="text-primary text-sm font-medium">History</span></h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 px-6 space-y-8">
+        <!-- Average Performance Card -->
+        <div class="glass-card p-6 rounded-3xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <span class="material-symbols-outlined notranslate text-6xl">analytics</span>
+            </div>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">Average Performance</p>
+            <div class="flex items-center justify-between">
+                <div class="flex items-baseline gap-1">
+                    <span class="text-5xl font-bold">8.2</span>
+                    <span class="text-slate-500 font-bold">/ 10</span>
+                </div>
+                <div class="flex -space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-full border-2 border-[#101b22] bg-slate-700 flex items-center justify-center text-xs font-bold">
+                        JD</div>
+                    <div
+                        class="w-10 h-10 rounded-full border-2 border-[#101b22] bg-primary flex items-center justify-center text-xs font-bold text-background-dark">
+                        AI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Sessions -->
+        <section class="space-y-6">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Recent Sessions</h2>
+
+            <div class="space-y-4" id="sessionsList">
+                <!-- Session Item 1 -->
+                <div
+                    class="glass-card p-5 rounded-2xl flex items-center gap-4 group hover:border-primary/30 transition-all cursor-pointer">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+                        <span class="material-symbols-outlined notranslate">database</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold">Data Scientist</h3>
+                            <span
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/20">7/10
+                                Score</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-500">
+                            <span class="material-symbols-outlined notranslate text-xs">calendar_today</span>
+                            Oct 20, 2023 • 10:00 AM
+                        </div>
+                        <div
+                            class="mt-3 flex items-center gap-1 text-[10px] font-bold text-primary uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                            View Feedback <span
+                                class="material-symbols-outlined notranslate text-xs">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Item 2 -->
+                <div
+                    class="glass-card p-5 rounded-2xl flex items-center gap-4 group hover:border-primary/30 transition-all cursor-pointer">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined notranslate">inventory_2</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold">Product Manager</h3>
+                            <span
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/20">8/10
+                                Score</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-500">
+                            <span class="material-symbols-outlined notranslate text-xs">calendar_today</span>
+                            Oct 15, 2023 • 4:15 PM
+                        </div>
+                        <div
+                            class="mt-3 flex items-center gap-1 text-[10px] font-bold text-primary uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                            View Feedback <span
+                                class="material-symbols-outlined notranslate text-xs">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Item 3 -->
+                <div
+                    class="glass-card p-5 rounded-2xl flex items-center gap-4 group hover:border-primary/30 transition-all cursor-pointer">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined notranslate">terminal</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold">DevOps Engineer</h3>
+                            <span
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/20">6/10
+                                Score</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-500">
+                            <span class="material-symbols-outlined notranslate text-xs">calendar_today</span>
+                            Oct 12, 2023 • 11:30 AM
+                        </div>
+                        <div
+                            class="mt-3 flex items-center gap-1 text-[10px] font-bold text-primary uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                            View Feedback <span
+                                class="material-symbols-outlined notranslate text-xs">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav
+        class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-md border-t border-primary/10 px-4 pb-6 pt-3 md:hidden z-50">
+        <div class="max-w-md mx-auto flex gap-2">
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../upload_page/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">upload</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Upload</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../dashboard/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">analytics</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Results</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-primary bg-primary/10 border border-primary/20"
+                href="../polished_interview_history/code.html">
+                <span class="material-symbols-outlined notranslate text-xl"
+                    style="font-variation-settings: 'FILL' 1">history</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">History</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../profile_page/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">person</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Profile</p>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Load Real History if available
+        document.addEventListener('DOMContentLoaded', () => {
+            const history = JSON.parse(localStorage.getItem('interviewHistory') || '[]');
+            if (history.length > 0) {
+                const sessionsList = document.getElementById('sessionsList');
+                // Optional: Prepend real history items here if desired
+                // But for the hackathon demo, the static items look "polished" like the screenshot request
+            }
+        });
+    </script>
+</body>
+
+</html>

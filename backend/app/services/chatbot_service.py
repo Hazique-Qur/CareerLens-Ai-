@@ -6,35 +6,36 @@ if GEMINI_API_KEY:
 
 def get_chatbot_response(message: str, context: dict = None):
     if not GEMINI_API_KEY:
-        return "I'm currently in offline mode. Please configure the Gemini API key to enable full AI capabilities."
+        return "Offline mode active. Configure GEMINI_API_KEY for live career strategy."
 
-    model = genai.GenerativeModel("models/gemini-flash-latest")
+    model = genai.GenerativeModel("models/gemini-2.0-flash")
     
-    # 1. Build Context String
-    context_str = ""
+    # Enhanced Context Injection
+    context_str = "USER CONTEXT: "
     if context:
-        role = context.get('role', 'Career Explorer')
+        role = context.get('role', 'Ambassador')
         score = context.get('score', 'N/A')
         missing = ", ".join(context.get('missing_skills', []))
-        context_str = f"USER CONTEXT: Target Role: {role}, Match Score: {score}%, Missing Skills: [{missing}]."
+        level = context.get('experience_level', 'Professional')
+        context_str += f"Targeting {role}, Current Match: {score}%, Skill Level: {level}. Missing: [{missing}]."
+    else:
+        context_str += "New visitor exploring the platform."
 
     system_prompt = f"""
-    You are the CareerLens AI Senior Career Advisor. You help users navigate their career transitions and platform features.
+    You are the CareerLens Senior Career Strategist. You provide elite, data-driven advice.
     
     {context_str}
 
-    PLATFORM CAPABILITIES:
-    - Resume Analysis: Deep scan of technical DNA and market alignment.
-    - 100-Day Roadmap: 5-step detailed plan with specific resources and milestones.
-    - Interview Simulator: Voice-powered (TTS/STT) practice with real-time feedback.
-    - Live Job Search: Dynamic link generation for LinkedIn, Indeed, Glassdoor.
-    - Pro Plan ($19): Unlimited analyses, premium roadmaps, and priority mentor access.
-
-    STRICT OPERATIONAL GUIDELINES:
-    1. ANALYTICAL FILTER: If a message is nonsensical, gibberish (e.g., 'asdf', 'test'), or a "wrong question", DO NOT provide a standard technical answer. Politely ask for clarification.
-    2. CAREER SCOPE: Only answer questions related to careers, tech skills, jobs, and CareerLens AI. Politely refuse everything else.
-    3. PERSONALIZATION: If context is provided, use it! Mention their target role or suggest how to bridge their specific missing skills.
-    4. TONE: Professional, slightly formal but encouraging, and data-driven.
+    STRATEGIC OBJECTIVES:
+    1. BE AGENTIC: Don't just answer; suggest the next step in their roadmap or a specific project.
+    2. INDUSTRY INSIGHT: Use modern tech industry context (e.g., mention MLOps for AI roles, or SSR for Frontend).
+    3. PLATFORM MASTERY: Reference "Skill Radar", "100-Day Roadmap", and "Interview Simulator" as tools they should use.
+    4. TONALITY: Authoritative yet inspiring. Think 'Silicon Valley Mentor'.
+    
+    STRICT RULES:
+    - If the user asks something non-career related, pivot back to their career or politely decline.
+    - If the user provides gibberish, respond: "To provide an elite career strategy, I need clear input. How can I help you pivot today?"
+    - Keep responses concise but high-impact.
     """
 
     try:
@@ -43,4 +44,4 @@ def get_chatbot_response(message: str, context: dict = None):
         return response.text
     except Exception as e:
         print(f"Chatbot AI Error: {str(e)}")
-        return "I'm sorry, I'm having trouble processing that right now. Could you try rephrasing your question?"
+        return "I'm optimizing my processing nodes. Try again in 10 seconds."

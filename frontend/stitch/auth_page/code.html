@@ -34,9 +34,10 @@
         }
 
         .glass-card {
-            background: rgba(22, 29, 38, 0.8);
+            background: rgba(255, 255, 255, 0.01);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(60, 175, 246, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -49,18 +50,18 @@
     </div>
 
     <header
-        class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4 md:px-8 border-b border-primary/10 bg-background-dark/50 backdrop-blur-md">
+        class="fixed top-0 left-0 right-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md border-b border-primary/10 p-4 md:px-8">
         <div class="flex items-center gap-4">
             <a href="../landing_page/code.html"
-                class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors">arrow_back</a>
+                class="material-symbols-outlined notranslate text-slate-400 hover:text-primary transition-colors">arrow_back</a>
             <div class="flex items-center gap-2">
                 <div class="bg-primary p-1.5 rounded-lg">
-                    <span class="material-symbols-outlined text-white text-2xl">insights</span>
+                    <span class="material-symbols-outlined notranslate text-white text-xl">insights</span>
                 </div>
                 <h2 class="text-xl font-bold tracking-tight text-white">CareerLens <span
                         class="text-primary text-sm font-medium">AI</span></h2>
                 <div
-                    class="px-2 py-0.5 bg-primary/20 rounded border border-primary/30 text-[10px] uppercase font-bold text-primary">
+                    class="ml-4 px-2 py-0.5 bg-primary/20 rounded border border-primary/30 text-[9px] uppercase font-bold text-primary">
                     Step 2 of 4</div>
             </div>
         </div>
@@ -122,10 +123,10 @@
     </div>
 
     <script>
-        // Check Session Logic: if already logged in, skip auth
+        // Check Session Logic: if already logged in, skip auth -> Go to Upload (Step 3)
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         if (isLoggedIn) {
-            window.location.href = '../dashboard/code.html';
+            window.location.href = '../upload_page/code.html';
         }
 
         const authForm = document.getElementById('authForm');

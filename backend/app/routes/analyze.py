@@ -27,37 +27,54 @@ async def analyze_resume(
     resume: UploadFile = File(...),
     target_role: str = Form(...)
 ):
-    # 1. Extract text from PDF
-    text = extract_text_from_pdf(resume.file)
+    try:
+        # 1. Extract text from PDF
+        text = extract_text_from_pdf(resume.file) or ""
 
-    if not text.strip():
+        if not str(text).strip():
+            return {
+                "error": "Resume text could not be extracted properly."
+            }
+
+        # 2. Get required skills for the role
+        role_skills = get_role_skills(target_role)
+
+        # 3. Extract skills using AI (Gemini)
+        extracted = extract_skills_from_resume(text, role_skills)
+        technical_skills = extracted.get("technical_skills", [])
+
+        # 4. Perform structured Gap Analysis
+        gap_analysis = analyze_skill_gap(technical_skills, role_skills)
+
+        # 5. Generate Actionable Roadmap using AI
+        roadmap = generate_roadmap(
+            target_role,
+            gap_analysis["missing_skills"]
+        )
+
+        # Propagate 'is_partial' if any service hit a fallback
+        is_partial = any([
+            extracted.get("is_partial", False),
+            gap_analysis.get("is_partial", False),
+            roadmap.get("is_demo_mode", False) or roadmap.get("api_error", False)
+        ])
+        gap_analysis["is_partial"] = is_partial
+
         return {
-            "error": "Resume text could not be extracted properly."
+            "target_role": target_role,
+            "technical_skills": technical_skills,
+            "role_required_skills": role_skills,
+            "gap_analysis": gap_analysis,
+            "roadmap": roadmap
         }
-
-    # 2. Extract skills using AI (Gemini)
-    extracted = extract_skills_from_resume(text)
-    technical_skills = extracted.get("technical_skills", [])
-
-    # 3. Get required skills for the role
-    role_skills = get_role_skills(target_role)
-
-    # 4. Perform structured Gap Analysis
-    gap_analysis = analyze_skill_gap(technical_skills, role_skills)
-
-    # 5. Generate Actionable Roadmap using AI
-    roadmap = generate_roadmap(
-        target_role,
-        gap_analysis["missing_skills"]
-    )
-
-    return {
-        "target_role": target_role,
-        "technical_skills": technical_skills,
-        "role_required_skills": role_skills,
-        "gap_analysis": gap_analysis,
-        "roadmap": roadmap
-    }
+    except Exception as e:
+        print(f"CRITICAL ANALYZE ERROR: {str(e)}")
+        # Return a graceful failure structure
+        return {
+            "error": "The AI service is currently overloaded. Please try again in 30 seconds.",
+            "details": str(e),
+            "is_partial": True
+        }
 
 @router.post("/feedback")
 async def get_interview_feedback(

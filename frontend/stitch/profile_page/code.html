@@ -37,9 +37,10 @@
         }
 
         .glass-card {
-            background: rgba(22, 29, 38, 0.8);
+            background: rgba(255, 255, 255, 0.01);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(60, 175, 246, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
         .custom-scrollbar::-webkit-scrollbar {
@@ -145,16 +146,19 @@
 <body class="bg-background-dark text-white min-h-screen flex flex-col font-display overflow-x-hidden">
     <!-- Header -->
     <header
-        class="flex items-center justify-between p-4 md:px-8 border-b border-primary/10 bg-background-dark/50 sticky top-0 z-50 backdrop-blur-md">
+        class="fixed top-0 left-0 right-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md border-b border-primary/10 p-4 md:px-8">
         <div class="flex items-center gap-4">
-            <a href="../landing_page/code.html" class="flex items-center gap-2">
+            <a href="../dashboard/code.html"
+                class="material-symbols-outlined notranslate text-slate-400 hover:text-primary transition-colors">arrow_back</a>
+            <div class="flex items-center gap-2">
                 <div class="bg-primary p-1.5 rounded-lg">
-                    <span class="material-symbols-outlined notranslate text-white text-2xl">insights</span>
+                    <span class="material-symbols-outlined notranslate text-white text-xl">insights</span>
                 </div>
-                <h2 class="text-xl font-bold tracking-tight text-white">CareerLens AI</h2>
-            </a>
+                <h2 class="text-xl font-bold tracking-tight text-white">CareerLens <span
+                        class="text-primary text-sm font-medium">AI</span></h2>
+            </div>
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 ml-auto">
             <a href="../dashboard/code.html"
                 class="text-slate-400 hover:text-white transition-colors text-sm font-medium hidden md:block">Results</a>
             <div class="size-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden"
@@ -233,7 +237,23 @@
                     <span class="material-symbols-outlined notranslate text-slate-600">payments</span>
                 </div>
 
-                <button onclick="window.location.href='../interview_history/code.html'"
+                <button onclick="window.location.href='../premium_performance_analytics/code.html'"
+                    class="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="size-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined notranslate text-primary text-xl">bar_chart</span>
+                        </div>
+                        <div class="text-left flex-1 min-w-0">
+                            <p class="text-sm font-bold truncate">Performance Analytics</p>
+                            <p class="text-[10px] text-slate-500 font-medium truncate">Deep metrics on your career
+                                progress</p>
+                        </div>
+                    </div>
+                    <span
+                        class="material-symbols-outlined notranslate text-slate-600 group-hover:text-white transition-colors">chevron_right</span>
+                </button>
+
+                <button onclick="window.location.href='../polished_interview_history/code.html'"
                     class="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors group">
                     <div class="flex items-center gap-4">
                         <div class="size-10 bg-emerald-500/10 rounded-xl flex items-center justify-center shrink-0">
@@ -241,7 +261,7 @@
                                 class="material-symbols-outlined notranslate text-emerald-500 text-xl">history_edu</span>
                         </div>
                         <div class="text-left flex-1 min-w-0">
-                            <p class="text-sm font-bold truncate">Interview Transcripts</p>
+                            <p class="text-sm font-bold truncate">Interview History</p>
                             <p class="text-[10px] text-slate-500 font-medium truncate">Review your AI-generated feedback
                             </p>
                         </div>
@@ -249,6 +269,7 @@
                     <span
                         class="material-symbols-outlined notranslate text-slate-600 group-hover:text-white transition-colors">chevron_right</span>
                 </button>
+
 
                 <button id="logoutBtn"
                     class="w-full p-6 flex items-center justify-between hover:bg-red-500/5 transition-colors group">
@@ -270,8 +291,8 @@
 
     <!-- Bottom Nav -->
     <nav
-        class="bg-background-dark/80 backdrop-blur-md border-t border-slate-800 px-4 pb-6 pt-3 md:hidden fixed bottom-0 left-0 right-0 z-50">
-        <div class="flex gap-2 max-w-md mx-auto">
+        class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-md border-t border-primary/10 px-4 pb-6 pt-3 md:hidden z-50">
+        <div class="max-w-md mx-auto flex gap-2">
             <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
                 href="../upload_page/code.html">
                 <span class="material-symbols-outlined notranslate text-xl">upload</span>

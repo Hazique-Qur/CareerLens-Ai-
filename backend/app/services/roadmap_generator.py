@@ -256,8 +256,15 @@ def generate_roadmap(target_role: str, missing_skills: list):
 
     try:
         response = model.generate_content(prompt)
-        text_response = response.text.replace("```json", "").replace("```", "").strip()
-        data = json.loads(text_response)
+        text = response.text.strip()
+        
+        # Robust JSON extraction
+        import re
+        json_match = re.search(r'\{.*\}', text, re.DOTALL)
+        if json_match:
+            text = json_match.group(0)
+            
+        data = json.loads(text)
         
         # Ensure it has exactly 5 steps or pad it
         while len(data.get("learning_roadmap", [])) < 5:

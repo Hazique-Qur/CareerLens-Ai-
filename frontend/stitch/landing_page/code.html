@@ -23,7 +23,7 @@
                     colors: {
                         "primary": "#3caff6",
                         "background-light": "#f5f7f8",
-                        "background-dark": "#101b22",
+                        "background-dark": "#0b0e14",
                     },
                     fontFamily: {
                         "display": ["Space Grotesk", "sans-serif"]
@@ -41,16 +41,74 @@
     <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(60, 175, 246, 0.2);
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
         .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(60, 175, 246, 0.15) 0%, rgba(16, 27, 34, 1) 100%);
+            background: radial-gradient(circle at 50% 50%, rgba(60, 175, 246, 0.1) 0%, rgba(11, 14, 20, 1) 100%);
+            position: relative;
+        }
+
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0%, rgba(60, 175, 246, 0.05) 50%, transparent 100%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #3caff6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
     <style>
@@ -142,10 +200,13 @@
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased">
     <!-- Navigation -->
     <nav
-        class="flex items-center justify-between px-6 py-4 border-b border-primary/10 bg-background-light dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+        class="flex items-center justify-between px-6 py-4 border-b border-primary/10 bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
         <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined notranslate text-primary text-3xl">insights</span>
-            <span class="text-xl font-bold tracking-tight">CareerLens AI</span>
+            <div class="bg-primary p-1.5 rounded-lg">
+                <span class="material-symbols-outlined notranslate text-white text-xl">insights</span>
+            </div>
+            <span class="text-xl font-bold tracking-tight">CareerLens <span
+                    class="text-primary text-sm font-medium">AI</span></span>
             <div
                 class="ml-4 px-2 py-0.5 bg-primary/20 rounded border border-primary/30 text-[9px] uppercase font-bold text-primary">
                 Step 1 of 4</div>
@@ -159,8 +220,8 @@
                 onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">Pricing</a>
         </div>
         <a href="../auth_page/code.html" id="loginBtn"
-            class="bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary hover:text-white transition-all">
-            Login
+            class="bg-primary px-5 py-2 rounded-xl text-sm font-bold text-background-dark hover:scale-105 transition-all shadow-lg shadow-primary/20">
+            Get Started
         </a>
     </nav>
     <!-- Hero Section -->
@@ -179,8 +240,9 @@
                 </span>
                 Next-Gen Career Intelligence
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-                Understand Your <br /> <span class="text-primary">Career Fit</span> With AI
+            <h1
+                class="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white reveal">
+                Understand Your <br /> <span class="gradient-text">Career Fit</span> With AI
             </h1>
             <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
                 Upload your resume. Compare against real job requirements. <br class="hidden md:block" /> Get a
@@ -225,9 +287,9 @@
         </div>
     </section>
     <!-- How It Works Section -->
-    <section class="py-24 px-6 max-w-7xl mx-auto" id="how-it-works">
+    <section class="py-24 px-6 max-w-7xl mx-auto reveal" id="how-it-works">
         <div class="text-center mb-16 space-y-4">
-            <h2 class="text-3xl md:text-5xl font-bold">How It Works</h2>
+            <h2 class="text-3xl md:text-5xl font-bold gradient-text">How It Works</h2>
             <p class="text-slate-500 dark:text-slate-400">Three simple steps to unlock your career potential.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -263,12 +325,13 @@
         </div>
     </section>
     <!-- Why It's Different Section -->
-    <section class="py-24 px-6 bg-slate-100 dark:bg-background-dark/50 border-y border-primary/10" id="differentiation">
+    <section class="py-24 px-6 bg-slate-100 dark:bg-background-dark/50 border-y border-primary/10 reveal"
+        id="differentiation">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="space-y-8">
-                <h2 class="text-4xl md:text-5xl font-black leading-tight">
+                <h2 class="text-4xl md:text-5xl font-black leading-tight gradient-text">
                     Not a Chatbot. <br />
-                    <span class="text-primary">A Career Decision Engine.</span>
+                    <span>A Career Decision Engine.</span>
                 </h2>
                 <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
                     Most AI tools just rewrite your text. CareerLens AI uses multi-step logic to understand the
@@ -430,8 +493,10 @@
                 Join thousands of professionals optimizing their career path with data-driven AI insights.
             </p>
             <a href="../auth_page/code.html"
-                class="bg-primary text-background-dark px-10 py-5 rounded-xl text-xl font-bold hover:scale-105 transition-transform shadow-xl shadow-primary/20">
-                Analyze Now
+                class="magnetic-btn px-8 py-4 bg-primary text-background-dark font-black rounded-2xl shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group">
+                Get Started Free
+                <span
+                    class="material-symbols-outlined notranslate group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </a>
             <div class="mt-8 flex items-center justify-center gap-8 grayscale opacity-50">
                 <span class="material-symbols-outlined notranslate text-3xl">shield_person</span>
@@ -833,6 +898,35 @@
         </div>
     </div>
     <script src="../chatbot.js"></script>
+    <script>
+        // Magnetic Button Logic
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = `translate(0px, 0px)`;
+            });
+        });
+
+        // Scroll Reveal Logic
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 
 </html>

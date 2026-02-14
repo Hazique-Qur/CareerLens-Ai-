@@ -46,6 +46,13 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
+        .glass-card {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
         .circular-progress {
             background: radial-gradient(closest-side, #0b0e14 79%, transparent 80% 100%),
                 conic-gradient(#10b981 75%, #161d26 0);
@@ -175,21 +182,27 @@
     </style>
     <script src="../config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
     <!-- Header -->
     <header
-        class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-4 justify-between">
-        <div class="flex items-center gap-2">
-            <a href="../upload_page/code.html" class="material-symbols-outlined notranslate text-primary">arrow_back</a>
+        class="sticky top-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md border-b border-primary/10 p-4 justify-between">
+        <div class="flex items-center gap-4">
+            <a href="../upload_page/code.html"
+                class="material-symbols-outlined notranslate text-slate-400 hover:text-primary transition-colors">arrow_back</a>
+            <div class="flex items-center gap-2">
+                <div class="bg-primary p-1.5 rounded-lg">
+                    <span class="material-symbols-outlined notranslate text-white text-xl">insights</span>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-white">CareerLens <span
+                        class="text-primary text-sm font-medium">AI</span></h1>
+                <div
+                    class="ml-4 px-2 py-0.5 bg-primary/20 rounded border border-primary/30 text-[9px] uppercase font-bold text-primary">
+                    Step 4 of 4</div>
+            </div>
         </div>
-        <a href="../landing_page/code.html" class="flex items-center gap-2">
-            <h1 class="text-lg font-bold tracking-tight">CareerLens AI</h1>
-            <div
-                class="px-2 py-0.5 bg-accent-green/20 rounded border border-accent-green/30 text-[9px] uppercase font-bold text-accent-green ml-2">
-                Step 4 of 4</div>
-        </a>
         <div class="flex items-center gap-2">
             <a href="../upload_page/code.html"
                 class="hidden md:flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary border border-primary/20 rounded-lg text-xs font-bold hover:bg-primary hover:text-background-dark transition-all mr-2">
@@ -213,6 +226,13 @@
                         <div class="max-h-64 overflow-y-auto custom-scrollbar" id="historyItems">
                             <!-- Populated via JS -->
                         </div>
+                        <div class="p-3 border-t border-slate-700 bg-slate-800/30">
+                            <a href="../premium_performance_analytics/code.html"
+                                class="flex items-center justify-center gap-2 py-2 bg-primary/10 text-primary rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-background-dark transition-all">
+                                <span class="material-symbols-outlined notranslate text-sm">trending_up</span>
+                                Detailed Analytics
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" id="exportBtn">
@@ -229,11 +249,16 @@
         <!-- Hero Match Section -->
         <section class="p-6 flex flex-col items-center text-center">
             <div class="relative w-48 h-48 mb-6">
+                <div id="partialBadge"
+                    class="hidden absolute -top-4 -right-4 px-3 py-1 bg-amber-500/20 text-amber-500 border border-amber-500/30 rounded-full text-[10px] font-black uppercase tracking-widest animate-pulse z-10 shadow-lg shadow-amber-500/20">
+                    Partial Analysis
+                </div>
                 <div class="circular-progress w-full h-full rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                     id="progressCircle">
                     <div class="text-center">
                         <span class="text-5xl font-bold text-accent-green" id="matchPercentage">0%</span>
-                        <p class="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1">Match Score</p>
+                        <p class="text-xs text-slate-400 font-medium uppercase tracking-widest mt-1" id="matchLabel">
+                            Match Score</p>
                     </div>
                 </div>
             </div>
@@ -254,7 +279,7 @@
 
         <!-- Resume Roaster Section -->
         <section class="px-4 py-2 hidden" id="roasterSection">
-            <div class="bg-accent-red/5 border border-accent-red/20 rounded-2xl p-6 relative overflow-hidden group">
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group">
                 <div
                     class="absolute -right-6 -top-6 size-24 bg-accent-red/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700">
                 </div>
@@ -286,7 +311,7 @@
             <!-- Radar Chart Area -->
             <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
                 <div
-                    class="md:col-span-2 flex items-center justify-center bg-surface-dark/40 border border-slate-800 rounded-xl p-6 relative group overflow-hidden">
+                    class="md:col-span-2 flex items-center justify-center glass-card rounded-xl p-6 relative group overflow-hidden">
                     <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity">
                     </div>
                     <div id="radarChart" class="w-full aspect-square max-w-[240px]">
@@ -599,11 +624,9 @@
                 }
             }
 
-            // 1. Match Score
-            const score = data.gap_analysis.match_score;
-            document.getElementById('matchPercentage').textContent = `${score}%`;
-            const progressCircle = document.getElementById('progressCircle');
-            progressCircle.style.background = `radial-gradient(closest-side, #0b0e14 79%, transparent 80% 100%), conic-gradient(#10b981 ${score}%, #161d26 0)`;
+            // 1. Match Score with Animation
+            const targetScore = data.gap_analysis.match_score;
+            animateScore(targetScore);
 
             // 2. Role Title
             document.getElementById('roleTitle').textContent = `Match for ${data.target_role}`;
@@ -614,10 +637,18 @@
 
             // 4. Strategic Advice
             const adviceText = document.getElementById('adviceText');
-            if (data.gap_analysis.missing_skills.length > 0) {
-                adviceText.textContent = `To reach senior-level proficiency in ${data.target_role}, prioritize mastering ${data.gap_analysis.missing_skills[0]}. Our analysis shows this skill is currently appearing in 85% of job descriptions for this role.`;
+            const analysis = data.gap_analysis.analysis || "";
+
+            if (data.gap_analysis.is_partial) {
+                document.getElementById('partialBadge').classList.remove('hidden');
+                adviceText.textContent = `Note: AI analysis is currently running in fallback mode. ${analysis}`;
             } else {
-                adviceText.textContent = `Your profile is an exceptional match for ${data.target_role}. Focus on soft skills and leadership to differentiate yourself further.`;
+                document.getElementById('partialBadge').classList.add('hidden');
+                if (data.gap_analysis.missing_skills.length > 0) {
+                    adviceText.textContent = analysis || `To reach senior-level proficiency in ${data.target_role}, prioritize mastering ${data.gap_analysis.missing_skills[0]}. Our analysis shows this skill is currently appearing in 85% of job descriptions for this role.`;
+                } else {
+                    adviceText.textContent = "Your profile is an exceptional match! Focus on leadership and soft skills to differentiate yourself further.";
+                }
             }
 
             // 5. Roadmap
@@ -776,28 +807,25 @@
                 const colorClass = diffColors[difficulty] || diffColors['Intermediate'];
 
                 return `
-                <div class="relative group">
-                    <div class="absolute -left-[29px] w-6 h-6 rounded-full ${isCompleted ? 'bg-accent-green' : 'bg-slate-700'} flex items-center justify-center ring-4 ring-background-dark group-hover:scale-110 transition-all cursor-pointer" onclick="toggleStep('${stepId}')">
+                <div class="relative group cursor-pointer" onclick="toggleRoadmapStep('${stepId}')">
+                    <div class="absolute -left-[29px] w-6 h-6 rounded-full ${isCompleted ? 'bg-accent-green' : 'bg-slate-700'} flex items-center justify-center ring-4 ring-background-dark group-hover:scale-110 transition-all">
                         <span class="material-symbols-outlined notranslate text-white text-xs">${isCompleted ? 'check' : 'circle'}</span>
                     </div>
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between gap-3 mb-1">
-                            <div class="flex items-center gap-3">
-                                <h4 class="font-bold text-sm ${isCompleted ? 'text-slate-500 line-through' : 'text-slate-200'}">Phase ${index + 1}: ${topic}</h4>
-                                <span class="px-2 py-0.5 rounded text-[8px] font-bold uppercase border ${colorClass}">${difficulty}</span>
-                            </div>
-                            <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleStep('${stepId}')" class="rounded border-slate-700 bg-slate-800 text-primary focus:ring-primary size-4 cursor-pointer no-print">
+                    <div class="glass-card rounded-xl p-4 hover:border-primary/30 transition-all">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-white text-sm">${topic}</h4>
+                            <span class="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${colorClass}">${difficulty}</span>
                         </div>
-                        ${description ? `<p class="text-xs text-slate-500 mt-1 leading-relaxed">${description}</p>` : ''}
-                        ${resource && resource !== "#" ? `
-                        <a href="${resource}" target="_blank" class="inline-flex items-center gap-1.5 mt-3 text-[10px] font-bold text-primary hover:text-white transition-colors group/link no-print">
-                            <span class="material-symbols-outlined notranslate text-sm">link</span>
-                            Recommended Resource
-                            <span class="material-symbols-outlined notranslate text-sm group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
-                        </a>
-                        ` : ''}
+                        <p class="text-xs text-slate-500 line-clamp-2">${description}</p>
+                        <div id="resources-${stepId}" class="hidden mt-4 pt-4 border-t border-white/5 space-y-2">
+                             <p class="text-[10px] font-bold text-primary uppercase tracking-widest">Learning Resources</p>
+                             <div class="flex flex-wrap gap-2">
+                                ${step.resources ? step.resources.map(r => `<span class="px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-[10px] text-slate-400 transition-colors">${r}</span>`).join('') : '<span class="text-[10px] text-slate-600">No resources linked yet</span>'}
+                             </div>
+                        </div>
                     </div>
-                </div>`;
+                </div>
+                `;
             }).join('')}`;
         }
 
@@ -1027,31 +1055,34 @@
             }
         }
 
-        function toggleStep(stepId) {
-            const isCompleted = localStorage.getItem(stepId) === 'true';
-            localStorage.setItem(stepId, !isCompleted);
-            location.reload();
+        function toggleRoadmapStep(stepId) {
+            const resDiv = document.getElementById(`resources-${stepId}`);
+            if (resDiv) {
+                resDiv.classList.toggle('hidden');
+            }
+            // Also mark as completed if not already (optional but interactive)
+            // localStorage.setItem(stepId, 'true');
         }
     </script>
     <!-- Bottom Navigation -->
     <nav
-        class="fixed bottom-0 left-0 right-0 bg-surface-dark/95 backdrop-blur-lg border-t border-slate-800 px-4 py-2 z-50">
-        <div class="max-w-md mx-auto flex justify-between">
-            <a class="flex flex-col items-center gap-1 p-2 text-slate-500" href="../profile_page/code.html">
-                <span class="material-symbols-outlined notranslate">person</span>
-                <span class="text-[10px] font-medium">Profile</span>
+        class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-md border-t border-primary/10 px-4 pb-6 pt-3 md:hidden z-50">
+        <div class="max-w-md mx-auto flex gap-2">
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../upload_page/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">upload</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Upload</p>
             </a>
-            <a class="flex flex-col items-center gap-1 p-2 text-primary" href="../dashboard/code.html">
-                <span class="material-symbols-outlined notranslate font-fill">analytics</span>
-                <span class="text-[10px] font-medium">Results</span>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-primary bg-primary/10 border border-primary/20"
+                href="../dashboard/code.html">
+                <span class="material-symbols-outlined notranslate text-xl"
+                    style="font-variation-settings: 'FILL' 1">analytics</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Results</p>
             </a>
-            <a class="flex flex-col items-center gap-1 p-2 text-slate-500" href="../interview_simulator/code.html">
-                <span class="material-symbols-outlined notranslate">school</span>
-                <span class="text-[10px] font-medium">Simulator</span>
-            </a>
-            <a class="flex flex-col items-center gap-1 p-2 text-slate-500" href="../upload_page/code.html">
-                <span class="material-symbols-outlined notranslate">upload</span>
-                <span class="text-[10px] font-medium">Upload</span>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../profile_page/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">person</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Profile</p>
             </a>
         </div>
     </nav>
@@ -1106,6 +1137,48 @@
     </div>
 
     <script src="../chatbot.js"></script>
+    <script>
+        function animateScore(target) {
+            let current = 0;
+            const duration = 1500;
+            const steps = 60;
+            const increment = target / steps;
+            const interval = duration / steps;
+            const display = document.getElementById('matchPercentage');
+            const circle = document.getElementById('progressCircle');
+
+            const counter = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(counter);
+                    if (target >= 70) triggerConfetti();
+                }
+                const val = Math.round(current);
+                display.textContent = `${val}%`;
+                circle.style.background = `radial-gradient(closest-side, #0b0e14 79%, transparent 80% 100%), conic-gradient(#10b981 ${current}%, #161d26 0)`;
+            }, interval);
+        }
+
+        function triggerConfetti() {
+            const count = 200;
+            const defaults = { origin: { y: 0.7 }, zIndex: 1000 };
+
+            function fire(particleRatio, opts) {
+                confetti({
+                    ...defaults,
+                    ...opts,
+                    particleCount: Math.floor(count * particleRatio)
+                });
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        }
+    </script>
 </body>
 
 </html>

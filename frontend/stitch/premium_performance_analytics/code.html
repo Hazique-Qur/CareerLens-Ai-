@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Performance History - CareerLens AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3caff6",
+                        "background-dark": "#0b0e14",
+                        "surface-dark": "#161d26",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0b0e14;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(60, 175, 246, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+        }
+    </style>
+    <script src="../config.js"></script>
+</head>
+
+<body class="text-white min-h-screen flex flex-col pb-20">
+    <!-- Header -->
+    <header
+        class="fixed top-0 left-0 right-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md border-b border-primary/10 p-4 md:px-8">
+        <div class="flex items-center gap-4">
+            <a href="../dashboard/code.html"
+                class="material-symbols-outlined notranslate text-slate-400 hover:text-primary transition-colors">arrow_back</a>
+            <div class="flex items-center gap-2">
+                <div class="bg-primary p-1.5 rounded-lg">
+                    <span class="material-symbols-outlined notranslate text-white text-xl">insights</span>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight text-white">Performance <span
+                        class="text-primary text-sm font-medium">History</span></h2>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 px-6 space-y-8">
+        <!-- Summary Stats Card -->
+        <div class="glass-card stat-card p-8 rounded-3xl border-primary/20">
+            <div class="grid grid-cols-2 gap-8">
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Average Performance</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-bold text-primary">7.5</span>
+                        <span class="text-slate-500 font-medium">/10</span>
+                    </div>
+                </div>
+                <div class="space-y-1 border-l border-white/5 pl-8">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Sessions Completed</p>
+                    <p class="text-4xl font-bold">12</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Sessions -->
+        <section class="space-y-6">
+            <h2 class="text-[10px] font-black uppercase tracking-widest text-slate-500">Recent Sessions</h2>
+
+            <div class="space-y-4">
+                <!-- Session 1 -->
+                <div class="glass-card p-6 rounded-3xl space-y-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="size-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                <span class="material-symbols-outlined notranslate">psychology</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Senior Data Scientist</h3>
+                                <p class="text-xs text-slate-500">Oct 24, 2023 • 45 mins</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-emerald-400">8.0</p>
+                            <p class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Score</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <div class="flex gap-2">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-white/5 text-[9px] font-black uppercase tracking-widest text-slate-400 border border-white/5">SQL</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-white/5 text-[9px] font-black uppercase tracking-widest text-slate-400 border border-white/5">PYTHON</span>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 bg-primary/10 text-primary px-5 py-2 rounded-xl text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                            Review <span class="material-symbols-outlined notranslate text-xs">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Session 2 -->
+                <div class="glass-card p-6 rounded-3xl space-y-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="size-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500">
+                                <span class="material-symbols-outlined notranslate">inventory_2</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">Product Manager</h3>
+                                <p class="text-xs text-slate-500">Oct 20, 2023 • 30 mins</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-amber-400">6.2</p>
+                            <p class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Score</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <div class="flex gap-2">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-white/5 text-[9px] font-black uppercase tracking-widest text-slate-400 border border-white/5">STRATEGY</span>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 bg-primary/10 text-primary px-5 py-2 rounded-xl text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                            Review <span class="material-symbols-outlined notranslate text-xs">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Session 3 -->
+                <div class="glass-card p-6 rounded-3xl space-y-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="size-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500">
+                                <span class="material-symbols-outlined notranslate">palette</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold">UX Designer</h3>
+                                <p class="text-xs text-slate-500">Oct 15, 2023 • 50 mins</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-emerald-400">9.1</p>
+                            <p class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Score</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <div class="flex gap-2">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-white/5 text-[9px] font-black uppercase tracking-widest text-slate-400 border border-white/5">PORTFOLIO</span>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 bg-primary/10 text-primary px-5 py-2 rounded-xl text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                            Review <span class="material-symbols-outlined notranslate text-xs">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav
+        class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-md border-t border-primary/10 px-4 pb-6 pt-3 md:hidden z-50">
+        <div class="max-w-md mx-auto flex gap-2">
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../upload_page/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">upload</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Upload</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../dashboard/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">analytics</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Results</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-primary bg-primary/10 border border-primary/20"
+                href="../premium_performance_analytics/code.html">
+                <span class="material-symbols-outlined notranslate text-xl"
+                    style="font-variation-settings: 'FILL' 1">history</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">History</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1.5 rounded-2xl py-2 text-slate-500 hover:bg-white/5 transition-colors"
+                href="../profile_page/code.html">
+                <span class="material-symbols-outlined notranslate text-xl">person</span>
+                <p class="text-[9px] font-black uppercase tracking-widest">Profile</p>
+            </a>
+        </div>
+    </nav>
+</body>
+
+</html>
